@@ -7,9 +7,201 @@
  * @Date:   2016-08-09-06:46:50
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-10-03:03:51
+ * @(demo)Last modified time: 2016-08-10-07:36:07
  */
 @import "../css/normalize.css";
+/* -------------------------------------------------------------------------- */
+.btn {
+    position        : relative;
+    display         : inline-block;
+    padding         : 6px 12px;
+    font-size       : 14px;
+    font-weight     : 600;
+    line-height     : 20px;
+    color           : #333;
+    white-space     : nowrap;
+    vertical-align  : middle;
+    cursor          : pointer;
+    user-select     : none;
+    background-color: #eee;
+    background-image: linear-gradient(#fcfcfc, #eee);
+    border          : 1px solid #d5d5d5;
+    border-radius   : 3px;
+    appearance      : none;
+}
+.btn i {
+    font-style : normal;
+    font-weight: 500;
+    opacity    : .6;
+}
+.btn .octicon {
+    vertical-align: text-top;
+}
+.btn .counter {
+    text-shadow     : none;
+    background-color: #e5e5e5;
+}
+.btn:focus {
+    text-decoration: none;
+    border-color   : #51a7e8;
+    outline        : none;
+    box-shadow     : 0 0 5px rgba(81, 167, 232, 0.5);
+}
+.btn.selected:focus,
+.btn:focus:hover {
+    border-color: #51a7e8;
+}
+.btn.zeroclipboard-is-active,
+.btn.zeroclipboard-is-hover,
+.btn:active,
+.btn:hover {
+    text-decoration : none;
+    background-color: #ddd;
+    background-image: linear-gradient(#eee, #ddd);
+    border-color    : #ccc;
+}
+.btn.selected,
+.btn.zeroclipboard-is-active,
+.btn:active {
+    background-color: #dcdcdc;
+    background-image: none;
+    border-color    : #b5b5b5;
+    box-shadow      : inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.btn.selected:hover {
+    background-color: #cfcfcf;
+}
+.btn.disabled,
+.btn.disabled:hover,
+.btn:disabled,
+.btn:disabled:hover {
+    color           : rgba(102, 102, 102, 0.5);
+    cursor          : default;
+    background-color: rgba(229, 229, 229, 0.5);
+    background-image: none;
+    border-color    : rgba(197, 197, 197, 0.5);
+    box-shadow      : none;
+}
+.btn-primary {
+    color           : #fff;
+    text-shadow     : 0 -1px 0 rgba(0, 0, 0, 0.15);
+    background-color: #60b044;
+    background-image: linear-gradient(#8add6d, #60b044);
+    border-color    : #5ca941;
+}
+.btn-primary .counter {
+    color           : #60b044;
+    background-color: #fff;
+}
+.btn-primary:hover {
+    color           : #fff;
+    background-color: #569e3d;
+    background-image: linear-gradient(#79d858, #569e3d);
+    border-color    : #4a993e;
+}
+.btn-primary.selected,
+.btn-primary:active {
+    text-shadow     : 0 1px 0 rgba(0, 0, 0, 0.15);
+    background-color: #569e3d;
+    background-image: none;
+    border-color    : #418737;
+}
+.btn-primary.selected:hover {
+    background-color: #4c8b36;
+}
+.btn-primary.disabled,
+.btn-primary.disabled:hover,
+.btn-primary:disabled,
+.btn-primary:disabled:hover {
+    color           : #fefefe;
+    background-color: #add39f;
+    background-image: linear-gradient(#c3ecb4, #add39f);
+    border-color    : #b9dcac #b9dcac #a7c89b;
+}
+.btn-danger {
+    color: #900;
+}
+.btn-danger:hover {
+    color           : #fff;
+    background-color: #b33630;
+    background-image: linear-gradient(#dc5f59, #b33630);
+    border-color    : #cd504a;
+}
+.btn-danger.selected,
+.btn-danger:active {
+    color           : #fff;
+    background-color: #b33630;
+    background-image: none;
+    border-color    : #9f312c;
+}
+.btn-danger.selected:hover {
+    background-color: #9f302b;
+}
+.btn-danger.disabled,
+.btn-danger.disabled:hover,
+.btn-danger:disabled,
+.btn-danger:disabled:hover {
+    color           : #cb7f7f;
+    background-color: #efefef;
+    background-image: linear-gradient(#fefefe, #efefef);
+    border-color    : #e1e1e1;
+}
+.btn-danger.selected .counter,
+.btn-danger:active .counter,
+.btn-danger:hover .counter {
+    color           : #b33630;
+    background-color: #fff;
+}
+.btn-outline {
+    color           : #4078c0;
+    background-color: #fff;
+    background-image: none;
+    border          : 1px solid #e5e5e5;
+}
+.btn-outline .counter {
+    background-color: #eee;
+}
+.btn-outline.selected,
+.btn-outline.zeroclipboard-is-active,
+.btn-outline.zeroclipboard-is-hover,
+.btn-outline:active,
+.btn-outline:hover {
+    color           : #fff;
+    background-color: #4078c0;
+    background-image: none;
+    border-color    : #4078c0;
+}
+.btn-outline.selected .counter,
+.btn-outline.zeroclipboard-is-active .counter,
+.btn-outline.zeroclipboard-is-hover .counter,
+.btn-outline:active .counter,
+.btn-outline:hover .counter {
+    color           : #4078c0;
+    background-color: #fff;
+}
+.btn-outline.selected:hover {
+    background-color: #396cad;
+}
+.btn-outline.disabled,
+.btn-outline.disabled:hover,
+.btn-outline:disabled,
+.btn-outline:disabled:hover {
+    color           : #767676;
+    background-color: #fff;
+    background-image: none;
+    border-color    : #e5e5e5;
+}
+.btn-with-count {
+    float                     : left;
+    border-top-right-radius   : 0;
+    border-bottom-right-radius: 0;
+}
+.btn-sm {
+    padding    : 3px 10px;
+    font-size  : 12px;
+    line-height: 20px;
+}
+/* ----------------------------------------------------------------------------- body */
 body,
 html {
     width : 100%;
@@ -42,36 +234,115 @@ body {
     color           : #333;
     font-family     : Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight     : 100;
-    background-color: #f1f1f1;
     font-size       : 14px;
+    line-height     : 20px;
+    padding         : 20px;
+    background      : url("../img/cBg.gif");
+    background-color: #f1f1f1;
 }
-/* ----------------------------------------------------------------------- */
-body {
-    padding: 20px;
+/* ----------------------------------------------------------------------------- footer */
+footer {
+    font-size : 12px;
+    margin-top: 10px;
+    text-align: right;
+    color     : #999;
+    font-style: oblique;
 }
+/* ----------------------------------------------------------------------------- bigTitle */
+.bigTitle {
+    color              : #e5004f;
+    font-size          : 40px;
+    line-height        : 40px;
+    height             : 100px;
+    padding-bottom     : 10px;
+    margin-bottom      : 10px;
+    border-bottom      : #CCC 1px solid;
+    font-weight        : 100;
+    background-image   : url("../img/kill-cms.logo.png");
+    background-position: 0 0;
+    background-repeat  : no-repeat;
+    background-size    : auto 100%;
+    text-align         : right;
+    justify-content    : space-between;
+}
+.bigTitle small {
+    font-style : oblique;
+    color      : #999;
+    font-size  : 16px;
+    line-height: 20px;
+}
+/* ----------------------------------------------------------------------------- */
 label {
-    margin: 0 10px;
+    margin: 0 15px;
 }
-.top {
-    padding-bottom: 10px;
-    flex-direction: row;
+label:first-of-type {
+    margin-left: 0;
 }
 .box {
     flex-direction : row;
     justify-content: space-between;
     /*flex-grow      : 1;*/
-    height         : 600px;
+    min-height     : 600px;
+    padding        : 10px 0;
 }
 .section {
     flex-direction: column;
     flex-grow     : 0;
     align-items   : stretch;
     width         : 50%;
-    padding       : 10px;
+    padding-right : 30px;
+}
+.section:first-of-type textarea {
+    background-color: #f1f1f1;
+}
+.section:last-of-type textarea {
+    background-color: #FFF;
+}
+.section:last-of-type {
+    padding-right: 15px;
 }
 .section textarea {
-    padding: 6px;
-    width  : 100%;
-    height : 100%;
+    padding         : 6px;
+    width           : 100%;
+    height          : 100%;
+    background-color: transparent;
 }
-.btn {}
+.tempDOM {
+    background-color: #f1f1f1;
+    padding         : 6px;
+    border          : #999 1px solid;
+    margin-top      : 20px;
+}
+.tempDOM,
+.tempDOM * {
+    font-weight: 100;
+    font-size  : 14px;
+}
+/* ----------------------------------------------------------------------------- tools */
+.tools {
+    position       : relative;
+    padding        : 10px 0;
+    flex-direction : row;
+    line-height    : 34px;
+    flex-grow      : 0;
+    justify-content: flex-start;
+}
+.tools .btn {
+    width   : 180px;
+    right   : 0;
+    left    : auto;
+    position: absolute;
+}
+.tools label {
+    margin: 0 10px;
+}
+.tools label:first-of-type {
+    margin-left: 0;
+}
+.attrBox {
+    padding       : 0 10px;
+    flex-direction: row;
+}
+.attrBox label {
+    margin: 0 6px;
+}
