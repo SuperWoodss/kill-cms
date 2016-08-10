@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:46:50
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-10-07:36:07
+ * @(demo)Last modified time: 2016-08-10-09:57:00
  */
 /*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
 
@@ -825,6 +825,10 @@ label:first-of-type {
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: flex-start;
+    -webkit-box-align    : center;
+        -ms-flex-align    : center;
+                -ms-grid-row-align    : center;
+            align-items    : center;
 }
 .tools .btn {
     width   : 180px;
