@@ -19,16 +19,7 @@
     <div class="box">
         <div class="section">
             <label>HTML:</label>
-            <textarea class="textarea" id="input">
-                <h2><a href="#">作为联合国具代表性的主要议事和决策机构</a></h2>
-                <h2 class="subTitle"><a href="#">作为联合国具代表性的主要议事和决策机构</a></h2>
-                <a href="#">
-                    <img src="local/1.png" width="598" height="397" alt=""> </a>
-                <img src="local/1.png" width="598" height="397" alt="">
-                <img data-src="local/2.png" width="598" height="397" alt="">
-                <img data-original="local/2.png" width="598" height="397" alt="">
-                <p class="abs"> 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十 <a href="#">详细</a> </p>
-            </textarea>
+            <textarea class="textarea" id="input"> </textarea>
         </div>
         <div class="section">
             <label>CMS code:</label>
@@ -37,17 +28,17 @@
     </div>
     <div class="tools">
         <label>nodeid:
-            <input type="number" id="nodeid"> </label>
+            <input id="nodeid"> </label>
         <div class="attrBox">
-            <label id="attr" data-attr="">attr:</label>
+            <label id="attr" data-attr="63">attr:</label>
             <label>
-                <input type="radio" name="attr" value="0" id="attr_0" onclick="$('#attr').attr('data-attr', '')" checked="checked"> 默认</label>
+                <input type="radio" name="attr" value="0" id="attr_0" onclick="$('#attr').attr('data-attr', '')"> 默认</label>
             <label>
                 <input type="radio" name="attr" value="61" id="attr_1" onclick="$('#attr').attr('data-attr', '61')"> 图片(61)</label>
             <label>
                 <input type="radio" name="attr" value="62" id="attr_2" onclick="$('#attr').attr('data-attr', '62')"> 头条(62)</label>
             <label>
-                <input type="radio" name="attr" value="63" id="attr_3" onclick="$('#attr').attr('data-attr', '63')"> 头条(63)</label>
+                <input type="radio" name="attr" value="63" id="attr_3" onclick="$('#attr').attr('data-attr', '63')" checked="checked"> 普通(63)</label>
         </div>
         <label>repeat:
             <input type="number" id="repeat"> </label>

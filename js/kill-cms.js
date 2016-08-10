@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-10-07:14:31
+ * @(demo)Last modified time: 2016-08-10-09:55:48
  */
 
 $(() => {
@@ -20,8 +20,9 @@ $(() => {
         let attr = $('#attr').attr('data-attr');
         let repeat = $('#repeat').val();
 
-        const n = '\n';
-        const cms = {
+        // let n = '\n';
+        let n = '';
+        let cms = {
             begin: '<!--webbot bot="AdvTitleList" nodeid="' + ((nodeid === '') ? '888888' : nodeid) + '" type="0" spanmode="0" dayspan="0" attr="' + ((attr === '') ? '' : ('+' + attr)) + '" comstring="' + n,
             lt: '&lt;',
             gt: '&gt;',
@@ -48,23 +49,15 @@ $(() => {
         let $a = $tempDOM.find('a');
         let $abs = $tempDOM.find('.abs');
         let $subTitle = $tempDOM.find('.subTitle');
+        let $ul = $tempDOM.find('ul');
 
         let $img = $tempDOM.find('img');
         let imgWidth = $img.attr('width');
         let imgHeight = $img.attr('height');
 
-
-
         // 处理 a 内部内容
         $a.each(function () {
             var _this = $(this);
-
-            // console.log(_this);
-            // _this.attr('href', cms.href);
-            // _this.before('UrlBegin');
-
-            // console.log(_this.find('img').length);
-
             if (_this.find('img').length === 0) {
                 _this.text(cms.Title);
             }
@@ -96,8 +89,8 @@ $(() => {
 
         // 处理 img
         $img.each(function () {
-            $(this).replaceWith(function () {
-                let _this = $(this);
+            let _this = $(this);
+            _this.replaceWith(() => {
                 let temp = cms.Picture.needcode[2];
                 if (_this.attr('data-src')) {
                     temp = cms.Picture.needcode[0]
@@ -108,16 +101,34 @@ $(() => {
             });
         });
 
-        // 获取处理后的 DOM
         let orgHtml = $tempDOM.html();
 
-        // 添加 Article
-        orgHtml = '<Article>' + n + orgHtml + '</Article>' + n;
-
-        // 添加 Repeat
-        if (repeat !== '' && repeat > 0) {
-            orgHtml = '<Repeat Begin=0 End=' + repeat + '>' + n + orgHtml + '</Repeat>' + n;
+        // 获取处理后的 DOM
+        let $li = $ul.find('li');
+        let size = $li.size();
+        console.log(size);
+        if ($ul && size > 1) {
+            orgHtml =
+                '<ul' + (($ul.hasClass('list')) ? ' class="list"' : '') + '>' + n +
+                '<Repeat Begin=0 End=' + size + '>' + n +
+                '<Article>' + n +
+                '<li>' + $li.eq(0).html() + '</li>' + n +
+                '</Article>' + n +
+                '</Repeat>' + n +
+                '</ul>' + n;
+        } else {
+            // 添加 Article
+            orgHtml = '<Article>' + n + orgHtml + '</Article>' + n;
+            // 添加 Repeat
+            if (repeat !== '' && repeat > 0) {
+                orgHtml = '<Repeat Begin=0 End=' + repeat + '>' + n + orgHtml + '</Repeat>' + n;
+            }
         }
+
+
+
+
+
 
         console.log('orgHtml1:', orgHtml);
 
@@ -131,7 +142,6 @@ $(() => {
             .replace(/"/g, cms.enpquot);
 
         console.log('newHtml:', orgHtml);
-
 
         let outputTemp = '';
         outputTemp =
