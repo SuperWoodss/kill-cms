@@ -12,51 +12,32 @@
 </head>
 
 <body>
+    <div class="top">
+        <label>nodeid: </label>
+        <input id="nodeid">
+        <label>attr:</label>
+        <input id="attr"> </div>
     <div class="box">
-        <h1 class="bigTitle">kill-cms</h1>
-        <div class="tr">
-            <div class="td0">
-                <span class="icoMust"> * </span> 广告地址 (1)：</div>
-            <div class="td1">
-                <input class="input" id="url" value="" placeholder="url"> </div>
-        </div>
-        <div class="tr">
-            <div class="td0">
-                <span class="icoMust"> * </span> 宽 (2)：</div>
-            <div class="td1">
-                <input class="input" id="width" value="" placeholder="500"> </div>
-        </div>
-        <div class="tr">
-            <div class="td0">
-                <span class="icoMust"> * </span> 高 (3)：</div>
-            <div class="td1">
-                <input class="input" id="height" value="" placeholder="70"> </div>
-        </div>
-        <div id="src">
-            <div class="tr">
-                <div class="td0">
-                    <span class="icoMust"> * </span> 图片地址 (4)：</div>
-                <div class="td1">
-                    <input class="input" value="" placeholder=".jpg / .png / .gif">
-                    <button id="addImg">+</button>
+        <div class="section">
+            <label>input:</label>
+            <textarea class="textarea" id="input">
+                <div class="swiper-slide">
+                    <a href="#">
+                        <img data-src="local/4.png" width="100%" height="auto" alt=""> </a>
+                    <p><a href="#"> h2 2016年二十国集团峰会第一次协调人会议圆满结束</a></p>
                 </div>
-            </div>
-            <div id="addImgPos" data-max="0"></div>
+            </textarea>
+            <div class="hide" id="tempDOM"> </div>
         </div>
-        <div class="line"></div>
-        <div class="tr outputBox">
-            <div class="output" id="output"> </div>
-        </div>
-        <div class="tr submitBox">
-            <div class="td0" id="tipBox"></div>
-            <div class="td1">
-                <input class="button" id="copy" type="button" data-clipboard-target="content" value="复 制">
-                <button id="submit">生 成</button>
-            </div>
+        <div class="section">
+            <label>output:</label>
+            <textarea class="textarea" id="output"> </textarea>
         </div>
     </div>
+    <button class="btn" id="submit">转 换</button>
+    <!-- js -->
     <script src="js/jq.js"></script>
-    <script src="js/ZeroClipboard.min.js"></script>
+    <!-- <script src="js/ZeroClipboard.min.js"></script> -->
     <!-- kill-cms -->
     <script src="bundle/kill-cms.min.js"></script>
 </body>
