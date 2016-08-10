@@ -12,51 +12,52 @@
 </head>
 
 <body>
+    <h1 class="bigTitle">
+        KILL CMS
+        <small>Have fun～</small>
+    </h1>
     <div class="box">
-        <h1 class="bigTitle">kill-cms</h1>
-        <div class="tr">
-            <div class="td0">
-                <span class="icoMust"> * </span> 广告地址 (1)：</div>
-            <div class="td1">
-                <input class="input" id="url" value="" placeholder="url"> </div>
+        <div class="section">
+            <label>HTML:</label>
+            <textarea class="textarea" id="input">
+                <h2><a href="#">作为联合国具代表性的主要议事和决策机构</a></h2>
+                <h2 class="subTitle"><a href="#">作为联合国具代表性的主要议事和决策机构</a></h2>
+                <a href="#">
+                    <img src="local/1.png" width="598" height="397" alt=""> </a>
+                <img src="local/1.png" width="598" height="397" alt="">
+                <img data-src="local/2.png" width="598" height="397" alt="">
+                <img data-original="local/2.png" width="598" height="397" alt="">
+                <p class="abs"> 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十 <a href="#">详细</a> </p>
+            </textarea>
         </div>
-        <div class="tr">
-            <div class="td0">
-                <span class="icoMust"> * </span> 宽 (2)：</div>
-            <div class="td1">
-                <input class="input" id="width" value="" placeholder="500"> </div>
-        </div>
-        <div class="tr">
-            <div class="td0">
-                <span class="icoMust"> * </span> 高 (3)：</div>
-            <div class="td1">
-                <input class="input" id="height" value="" placeholder="70"> </div>
-        </div>
-        <div id="src">
-            <div class="tr">
-                <div class="td0">
-                    <span class="icoMust"> * </span> 图片地址 (4)：</div>
-                <div class="td1">
-                    <input class="input" value="" placeholder=".jpg / .png / .gif">
-                    <button id="addImg">+</button>
-                </div>
-            </div>
-            <div id="addImgPos" data-max="0"></div>
-        </div>
-        <div class="line"></div>
-        <div class="tr outputBox">
-            <div class="output" id="output"> </div>
-        </div>
-        <div class="tr submitBox">
-            <div class="td0" id="tipBox"></div>
-            <div class="td1">
-                <input class="button" id="copy" type="button" data-clipboard-target="content" value="复 制">
-                <button id="submit">生 成</button>
-            </div>
+        <div class="section">
+            <label>CMS code:</label>
+            <textarea class="textarea" id="output"> </textarea>
         </div>
     </div>
+    <div class="tools">
+        <label>nodeid:
+            <input type="number" id="nodeid"> </label>
+        <div class="attrBox">
+            <label id="attr" data-attr="">attr:</label>
+            <label>
+                <input type="radio" name="attr" value="0" id="attr_0" onclick="$('#attr').attr('data-attr', '')" checked="checked"> 默认</label>
+            <label>
+                <input type="radio" name="attr" value="61" id="attr_1" onclick="$('#attr').attr('data-attr', '61')"> 图片(61)</label>
+            <label>
+                <input type="radio" name="attr" value="62" id="attr_2" onclick="$('#attr').attr('data-attr', '62')"> 头条(62)</label>
+            <label>
+                <input type="radio" name="attr" value="63" id="attr_3" onclick="$('#attr').attr('data-attr', '63')"> 头条(63)</label>
+        </div>
+        <label>repeat:
+            <input type="number" id="repeat"> </label>
+        <button class="btn btn-primary" id="submit">转 换</button>
+    </div>
+    <div class="tempDOM" id="tempDOM"> tempDOM </div>
+    <footer>&copy; 2016 Xinhuanet.com / Powered by SuperWoods / MIT license / v0.0.1 </footer>
+    <!-- js -->
     <script src="js/jq.js"></script>
-    <script src="js/ZeroClipboard.min.js"></script>
+    <!-- <script src="js/ZeroClipboard.min.js"></script> -->
     <!-- kill-cms -->
     <script src="bundle/kill-cms.min.js"></script>
 </body>
