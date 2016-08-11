@@ -85,14 +85,47 @@
 </Repeat>
 ```
 
+## kill-cms testes
+
+### test1:
+
+```html
+<h2><a href="#">作为联合国具代表性的主要议事和决策机构</a></h2>
+<h2 class="subTitle"><a href="#">作为联合国具代表性的主要议事和决策机构</a></h2>
+<a href="#">
+<img src="local/1.png" width="598" height="397" alt=""> </a>
+<img src="local/1.png" width="598" height="397" alt="">
+<img data-src="local/2.png" width="598" height="397" alt="">
+<img data-original="local/2.png" width="598" height="397" alt="">
+<p class="abs"> 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十 <a href="#">详细</a> </p>
 ```
-<Article>
-    <h2 class="bigTitle"> <Url><a href=ArticleUrlPh></Url><Title length="0">TitlePh</Title>
-</a> </h2>
-    <p class="abs">
-        <Abstract>AbstractPh</Abstract>
-        <Url>
-            <a href=ArticleUrlPh></Url>【详细】</a>
-    </p>
-</Article>
+
+### list:
+
+```html
+<h2><a href="#">作为联合国具代表性的主要议事和决策机构</a></h2>
+<h2 class="subTitle"><a href="#">作为联合国具代表性的主要议事和决策机构</a></h2>
+<a href="#">
+<img src="local/1.png" width="598" height="397" alt=""> </a>
+<img src="local/1.png" width="598" height="397" alt="">
+<img data-src="local/2.png" width="598" height="397" alt="">
+<img data-original="local/2.png" width="598" height="397" alt="">
+<p class="abs"> 一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十 <a href="#">详细</a> </p>
+```
+
+### 特殊小模版格式：
+
+一个节点下：
+
+```html
+<h3>
+    <Article><Url><a href="ArticleUrlPh" ></Url><Title length="0">TitlePh</Title></a></Article>
+</h3>
+<ul class="list">
+    <Repeat Begin=0 End=3>
+        <Article>
+            <li><Url><a href="ArticleUrlPh" ></Url><Title length="0">TitlePh</Title></a></li>
+        </Article>
+    </Repeat>
+</ul>
 ```
