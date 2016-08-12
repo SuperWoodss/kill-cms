@@ -1,4 +1,4 @@
-# 一 特殊用法：
+# 特殊用法：
 
 ## 只取文章标题
 
@@ -30,7 +30,7 @@
 - `0` 时：取标题和连接(针对链接稿)
 - `10` 时：取标题长度，取标题和连接(针对链接稿)
 
-# 二 快捷方法：
+# 快捷方法：
 
 ## 标题链接
 
@@ -51,7 +51,7 @@
   - `+62` 头条
   - `+63` 普通
 
-## ul li 循环的翔宇组件：
+## `ul li` 循环的翔宇组件：
 
   ```html
   <!--webbot bot="AdvTitleList" nodeid="111111" type="0" spanmode="0" dayspan="0" attr="" comstring="<ul><Repeat Begin=1 End=8><Article><li><Url><a href=ArticleUrlPh target=#enpquot#_blank#enpquot#></Url><Title length=#enpquot#0#enpquot#>TitlePh</Title></a></li></Article></Repeat>
@@ -76,9 +76,9 @@
   <Url><a href=ArticleUrlPh target="_blank"></Url><Abstract>AbstractPh</Abstract></a>
   ```
 
-# 三 其他汇总：
+# 其他汇总：
 
-ssi使用方法：
+`ssi`使用方法：
 
   ```html
   <!--#include virtual="ssitop.htm"-->
