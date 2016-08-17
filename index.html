@@ -19,7 +19,10 @@
     <div class="box">
         <div class="section">
             <label>HTML:</label>
-            <textarea class="textarea" id="input"> </textarea>
+            <textarea class="textarea" id="input">
+                <a href="#">
+                    <img src="local/1.png" width="598" height="397" alt=""> </a>
+            </textarea>
         </div>
         <div class="section">
             <label>CMS code:</label>
@@ -29,21 +32,22 @@
     <div class="tools">
         <label>nodeid:
             <input id="nodeid"> </label>
-        <div class="attrBox">
-            <label id="attr" data-attr="63">attr:</label>
+        <div class="attrBox" id="attr">
+            <label class="attr">attr:</label>
             <label>
-                <input type="radio" name="attr" value="0" id="attr_0" onclick="$('#attr').attr('data-attr', '')"> 默认</label>
+                <input type="checkbox" name="attr" value="">默认</label>
             <label>
-                <input type="radio" name="attr" value="61" id="attr_1" onclick="$('#attr').attr('data-attr', '61')"> 图片(61)</label>
+                <input type="checkbox" name="attr" value="61">图片(61)</label>
             <label>
-                <input type="radio" name="attr" value="62" id="attr_2" onclick="$('#attr').attr('data-attr', '62')"> 头条(62)</label>
+                <input type="checkbox" name="attr" value="62">头条(62)</label>
             <label>
-                <input type="radio" name="attr" value="63" id="attr_3" onclick="$('#attr').attr('data-attr', '63')" checked="checked"> 普通(63)</label>
+                <input type="checkbox" name="attr" value="63">普通(63)</label>
         </div>
         <label>repeat:
             <input type="number" id="repeat"> </label>
         <button class="btn btn-primary" id="submit">转 换</button>
     </div>
+    <div class="tempShow" id="tempShow"> tempShow </div>
     <div class="tempDOM" id="tempDOM"> tempDOM </div>
     <footer>&copy; 2016 Xinhuanet.com / Powered by SuperWoods / MIT license / v0.0.1 </footer>
     <!-- js -->
