@@ -7,9 +7,12 @@
  * @Date:   2016-08-09-06:46:50
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-11-08:32:14
+ * @(demo)Last modified time: 2016-08-15-12:14:18
  */
 @import "../css/normalize.css";
+label input {
+    outline: 0;
+}
 /* -------------------------------------------------------------------------- */
 .btn {
     position        : relative;
@@ -278,6 +281,10 @@ label {
 label:first-of-type {
     margin-left: 0;
 }
+.box,
+.section textarea {
+    min-height: 500px;
+}
 .box {
     flex-direction : row;
     justify-content: space-between;
@@ -304,10 +311,10 @@ label:first-of-type {
 .section textarea {
     padding         : 6px;
     width           : 100%;
-    height          : 100%;
     background-color: transparent;
 }
 .tempDOM {
+    display         : none;
     background-color: #f1f1f1;
     padding         : 6px;
     border          : #999 1px solid;
@@ -315,6 +322,18 @@ label:first-of-type {
 }
 .tempDOM,
 .tempDOM * {
+    font-weight: 100;
+    font-size  : 14px;
+}
+/* tempShow */
+.tempShow {
+    background-color: #f1f1f1;
+    padding         : 6px;
+    border          : #999 1px solid;
+    margin-top      : 20px;
+}
+.tempShow,
+.tempShow * {
     font-weight: 100;
     font-size  : 14px;
 }

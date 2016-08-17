@@ -7,23 +7,36 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-10-09:55:48
+ * @(demo)Last modified time: 2016-08-17-05:01:27
  */
 
 $(() => {
-    let cloneDOM = ($tempDOM, tempDOM) => {
-        $tempDOM.html(tempDOM);
+    // 克隆input 到 tempDOM
+    let cloneDOM = ($tempDOM, DOM) => {
+        $tempDOM.html(DOM);
     }
+
+    // 开发模块：展示处理后的DOM
+    let showDOM = (DOM) => {
+        let $tempShow = $('#tempShow');
+        $tempShow.text(DOM);
+    }
+
+    let attr = '';
+
+    // killHandler
     let killHandler = ($tempDOM) => {
         let $output = $('#output');
         let nodeid = $('#nodeid').val();
-        let attr = $('#attr').attr('data-attr');
         let repeat = $('#repeat').val();
+        let dayspan = (repeat < 200) ? 0 : repeat;
 
-        // let n = '\n';
-        let n = '';
+        let nOn = 1; // 0: false, 1: tre\ue;
+        let n = (nOn) ? '\n' : '';
+
+        // let n = '';
         let cms = {
-            begin: '<!--webbot bot="AdvTitleList" nodeid="' + ((nodeid === '') ? '888888' : nodeid) + '" type="0" spanmode="0" dayspan="0" attr="' + ((attr === '') ? '' : ('+' + attr)) + '" comstring="' + n,
+            begin: '<!--webbot bot="AdvTitleList" nodeid="' + ((nodeid === '') ? '888888' : nodeid) + '" type="0" spanmode="0" dayspan="' + dayspan + '" attr="' + attr + '" comstring="' + n,
             lt: '&lt;',
             gt: '&gt;',
             enpquot: '#enpquot#',
@@ -42,10 +55,7 @@ $(() => {
             end: '" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->'
         };
 
-
-
-        console.log('orgHtml0:', $tempDOM.html());
-
+        // console.log('orgHtml0:', $tempDOM.html());
         let $a = $tempDOM.find('a');
         let $abs = $tempDOM.find('.abs');
         let $subTitle = $tempDOM.find('.subTitle');
@@ -56,40 +66,40 @@ $(() => {
         let imgHeight = $img.attr('height');
 
         // 处理 a 内部内容
-        $a.each(function () {
-            var _this = $(this);
+        $a.each((i, e) => {
+            var _this = $(e);
             if (_this.find('img').length === 0) {
                 _this.text(cms.Title);
             }
         });
 
         // 处理 $abs
-        $abs.each(function () {
-            let _this = $(this);
+        $abs.each((i, e) => {
+            let _this = $(e);
             if (_this.find('a')) {
                 let aText = _this.find('a').text();
-                _this.text(cms.Abstract + 'UrlBegin<a href="' + cms.ArticleUrlPh + '">UrlEnd' + aText + '</a>');
+                _this.text(cms.Abstract + 'URL_BEGIN<a href="' + cms.ArticleUrlPh + '">URL_END' + aText + '</a>');
             } else {
                 _this.text(cms.Abstract);
             }
         });
 
         // 处理 $subTitle
-        $subTitle.each(function () {
-            let _this = $(this);
+        $subTitle.each((i, e) => {
+            let _this = $(e);
             if (_this.find('a')) {
-                _this.text('UrlBegin<a href="' + cms.ArticleUrlPh + '">UrlEnd' + cms.Subtitle + '</a>');
+                _this.text('URL_BEGIN<a href="' + cms.ArticleUrlPh + '">URL_END' + cms.Subtitle + '</a>');
             } else {
                 _this.text(cms.Subtitle);
             }
         });
 
         // 处理 a href自身
-        $a.attr('href', cms.ArticleUrlPh).before('UrlBegin').prepend('UrlEnd');
+        $a.attr('href', cms.ArticleUrlPh).before('URL_BEGIN').prepend('URL_END');
 
         // 处理 img
-        $img.each(function () {
-            let _this = $(this);
+        $img.each((i, e) => {
+            let _this = $(e);
             _this.replaceWith(() => {
                 let temp = cms.Picture.needcode[2];
                 if (_this.attr('data-src')) {
@@ -101,7 +111,11 @@ $(() => {
             });
         });
 
+        //
         let orgHtml = $tempDOM.html();
+
+        // 开发用模块：查看处理完的 DOM
+        showDOM(orgHtml);
 
         // 获取处理后的 DOM
         let $li = $ul.find('li');
@@ -118,25 +132,20 @@ $(() => {
                 '</ul>' + n;
         } else {
             // 添加 Article
-            orgHtml = '<Article>' + n + orgHtml + '</Article>' + n;
+            orgHtml = '<Article>' + n + orgHtml + n + '</Article>' + n;
             // 添加 Repeat
             if (repeat !== '' && repeat > 0) {
-                orgHtml = '<Repeat Begin=0 End=' + repeat + '>' + n + orgHtml + '</Repeat>' + n;
+                orgHtml = '<Repeat Begin=0 End=' + repeat + '>' + n + orgHtml + n + '</Repeat>' + n;
             }
         }
 
-
-
-
-
-
-        console.log('orgHtml1:', orgHtml);
+        // console.log('orgHtml1:', orgHtml);
 
         // 转码
         orgHtml = orgHtml
             .replace(/picture/g, 'Picture')
-            .replace(/UrlBegin/g, '<Url>')
-            .replace(/UrlEnd/g, '</Url>')
+            .replace(/URL_BEGIN/g, '<Url>')
+            .replace(/URL_END/g, '</Url>')
             .replace(/</g, cms.lt)
             .replace(/>/g, cms.gt)
             .replace(/"/g, cms.enpquot);
@@ -145,27 +154,56 @@ $(() => {
 
         let outputTemp = '';
         outputTemp =
-            cms.begin +
-            orgHtml +
+            cms.begin + n +
+            orgHtml + n +
             cms.end;
 
         $output.text(outputTemp);
     }
 
+    // attrHandler
+    let $attr = $('#attr');
+    let $attrText = $attr.find('.attr');
+    let $nameAttrArray = $attr.find('[name="attr"]');
+
+    let attrHandler = (e) => {
+        let $this = $(e.currentTarget);
+        let v = '+' + $this.val();
+        console.log(v);
+
+        console.log($this[0].checked && v !== '+');
+
+        if ($this[0].checked && v !== '+') {
+            attr += v;
+            console.log('attr:', attr);
+        } else {
+            // let reg = new RegExp(eval('/' + v + '/g'));
+            // console.log(reg);
+            attr = attr.replace(eval(v) + '/g', '');
+        }
+
+        if (attr !== '' || v !== '+') {
+            $attrText.text(attr);
+        } else {
+            $attrText.text('默认');
+        }
+    }
+
+    $nameAttrArray.on('change', (e) => {
+        attrHandler(e);
+    });
+
     let $submit = $('#submit');
     $submit.on('click', () => {
 
         let $input = $('#input');
-        let tempDOM = $input.val();
+        let inputVal = $input.val();
         let $tempDOM = $('#tempDOM');
 
-        cloneDOM($tempDOM, tempDOM);
-        killHandler($tempDOM);
-        // if (tempDOM !== '') {
-        //
-        // } else {
-        //     alert('你在逗我吗？');
-        // }
-    });
+        // 克隆 input 内容
+        cloneDOM($tempDOM, $.trim(inputVal));
 
+        // 转译 tempDOM 并输出
+        killHandler($tempDOM);
+    });
 });
