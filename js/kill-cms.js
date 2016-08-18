@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-18-05:40:04
+ * @(demo)Last modified time: 2016-08-18-05:56:03
  */
 
 $(() => {
@@ -16,7 +16,7 @@ $(() => {
     // 临时DOM
     let $tempDOM = $('#tempDOM');
 
-    // 隐藏临时DOM 和 开发模块
+    // 隐藏临时DOM和开发模块
     // $tempShow.show();
     // $tempDOM.show();
 
@@ -31,6 +31,7 @@ $(() => {
     let $attrText = $attr.find('.attr');
     let $nameAttrArray = $attr.find('[name="attr"]');
 
+    // 是否折行 （‘\n’）
     let $format = $('#format');
     let $formatInput = $format.find('input');
     let n = '';
@@ -42,18 +43,19 @@ $(() => {
     });
 
     // 判断是否有 class
-    let classHandle = ($tag) => {
+    let classHandler = ($tag) => {
         let className = $tag.attr('class');
         return (className.length > 0) ? ` class="${className}"` : '';
     }
 
-    // killHandler
+    // 主处理器 killHandler
     let killHandler = ($tempDOM) => {
         let $output = $('#output');
         let nodeid = $('#nodeid').val();
         let repeat = $('#repeat').val();
         let dayspan = (repeat < 200) ? 0 : repeat;
 
+        // cms 规则
         let cms = {
             begin: '<!--webbot bot="AdvTitleList" nodeid="' + ((nodeid === '') ? '888888' : nodeid) + '" type="0" spanmode="0" dayspan="' + dayspan + '" attr="' + attr + '" comstring="' + n,
             lt: '&lt;',
@@ -74,6 +76,7 @@ $(() => {
             end: '" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->'
         };
 
+        // 预处理 tempDOM
         // console.log('orgHtml0:', $tempDOM.html());
         let $a = $tempDOM.find('a');
         let $abs = $tempDOM.find('.abs');
@@ -143,7 +146,7 @@ $(() => {
             });
         });
 
-        //
+        // 获取预处理过的 tempDOM
         let orgHtml = $tempDOM.html();
 
         // 格式化 orgHtml
@@ -154,7 +157,6 @@ $(() => {
         });
         console.log('HTMLFormat orgHtml: ', orgHtml);
 
-        // 开发用模块：查看处理完的 DOM
         // 开发模块：展示处理后的DOM
         let showDOM = (DOM) => {
             $tempShow.text(DOM);
@@ -177,13 +179,14 @@ $(() => {
             //     '</ul>' + n;
 
             // 处理 ul 的 class
-            let ulClass = classHandle($ul);
+            let ulClass = classHandler($ul);
             console.log(ulClass);
 
             // 处理 li 的 class
-            let liClass = classHandle($li);
+            let liClass = classHandler($li);
             console.log(liClass);
 
+            // 转换 orgHtml
             orgHtml =
                 `${n}<ul${ulClass}>
                     <Repeat Begin=0 End=${size}>
@@ -203,7 +206,7 @@ $(() => {
 
         // console.log('orgHtml1:', orgHtml);
 
-        // 转码
+        // 使用正则转码
         orgHtml = orgHtml
             .replace(/picture/g, 'Picture')
             .replace(/URL_BEGIN/g, '<Url>')
@@ -214,7 +217,10 @@ $(() => {
 
         console.log('newHtml:', orgHtml);
 
+        // 清空 outputTemp
         let outputTemp = '';
+
+        // 重新给 outputTemp 赋值
         outputTemp =
             cms.begin + n +
             orgHtml + n +
@@ -222,13 +228,14 @@ $(() => {
 
         console.log(outputTemp);
 
+        // 输出结果（必须是字符串）
         $output.text(outputTemp);
     }
 
-    // attrHandler
-    // 初始化激活默认
+    // 初始化激活 默认属性
     $nameAttrArray.eq(0)[0].checked = true;
 
+    // 属性处理器
     let attrHandler = (e) => {
         $nameAttrArray.eq(0)[0].checked = false;
 
@@ -251,11 +258,13 @@ $(() => {
         // }
     }
 
+    // 当属性改变时
     $nameAttrArray.on('change', (e) => {
         let $this = $(e.currentTarget);
         if ($this.val() !== '') {
             attrHandler(e);
-        } else { // 点击默认列表关闭其它
+        } else {
+            // 点击默认列表关闭其它属性
             $nameAttrArray
                 .attr('data-attr', '')
                 .each((i, e) => {
@@ -269,16 +278,17 @@ $(() => {
         }
     });
 
+    // 提交
     let $submit = $('#submit');
     $submit.on('click', () => {
 
         let $input = $('#input');
         let inputVal = $input.val();
 
-        // 克隆 input 内容
+        // 克隆 input 内容转为 killHandler 可以处理的 DOM结构
         cloneDOM($tempDOM, $.trim(inputVal));
 
-        // 收集 attr
+        // 收集输出 attr
         attr = '';
         $('#attr')
             .find('input')
@@ -295,6 +305,7 @@ $(() => {
         killHandler($tempDOM);
     });
 
+    // footer添加版本信息，读取 package.json 中 version对象
     $.when($.ajax('package.json')).then((data) => {
         let v = data.version;
         $('title').append('_v' + v);
