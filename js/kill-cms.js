@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-18-06:15:47
+ * @(demo)Last modified time: 2016-08-18-08:28:38
  */
 
 $(() => {
@@ -34,18 +34,18 @@ $(() => {
     // 是否折行 （‘\n’）
     let $format = $('#format');
     let $formatInput = $format.find('input');
-    let n = '';
+    let wrap = '';
     $formatInput.eq(0).on('click', (e) => {
-        n = '\n';
+        wrap = '\n';
     });
     $formatInput.eq(1).on('click', (e) => {
-        n = '';
+        wrap = '';
     });
 
     // 判断是否有 class
     let classHandler = ($tag) => {
         let className = $tag.attr('class');
-        return (className.length > 0) ? ` class="${className}"` : '';
+        return (className && className.length > 0) ? ` class="${className}"` : '';
     }
 
     // 主处理器 killHandler
@@ -102,8 +102,6 @@ $(() => {
             //     $this.html(html);
             // }
         });
-        // };
-        // aHandler();
 
         // 处理 $abs
         $abs.each((i, e) => {
@@ -155,21 +153,12 @@ $(() => {
         }
         showDOM(orgHtml);
 
-        // 获取处理后的 DOM
+        // 处理 li DOM
         let $li = $ul.find('li');
         let size = $li.size();
         console.log(size);
 
         if ($ul && size > 1) {
-            // orgHtml =
-            //     '<ul' + (($ul.hasClass('list')) ? ' class="list"' : '') + '>' + n +
-            //     '<Repeat Begin=0 End=' + size + '>' + n +
-            //     '<Article>' + n +
-            //     '<li>' + $li.eq(0).html() + '</li>' + n +
-            //     '</Article>' + n +
-            //     '</Repeat>' + n +
-            //     '</ul>' + n;
-
             // 处理 ul 的 class
             let ulClass = classHandler($ul);
             console.log(ulClass);
@@ -189,18 +178,18 @@ $(() => {
                 </ul>`;
         } else {
             // 添加 Article
-            orgHtml = '<Article>' + n + orgHtml + n + '</Article>' + n;
+            orgHtml = `<Article>${orgHtml}</Article>`;
             // 添加 Repeat
             if (repeat !== '' && repeat > 0) {
-                orgHtml = '<Repeat Begin=0 End=' + repeat + '>' + n + orgHtml + n + '</Repeat>' + n;
+                orgHtml = `<Repeat Begin=0 End=${repeat}>${orgHtml}</Repeat>`;
             }
         }
 
         // 格式化 orgHtml
         orgHtml = $.HTMLFormat(orgHtml, {
-            indent_size: (n === '\n') ? 4 : 0,
-            wrap: (n === '\n') ? true : false,
-            indent_character: (n === '\n') ? ' ' : '',
+            indent_size: (wrap === '\n') ? 4 : 0,
+            wrap: (wrap === '\n') ? true : false,
+            indent_character: (wrap === '\n') ? ' ' : '',
         });
         console.log('HTMLFormat orgHtml: ', orgHtml);
         // console.log('orgHtml1:', orgHtml);
@@ -222,9 +211,9 @@ $(() => {
         // 重新给 outputTemp 赋值
         outputTemp =
             cms.begin +
-            n +
+            wrap +
             orgHtml +
-            n +
+            wrap +
             cms.end;
 
         console.log(outputTemp);
