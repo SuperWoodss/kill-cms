@@ -7,19 +7,22 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-18-01:06:44
+ * @(demo)Last modified time: 2016-08-18-02:03:59
  */
 
 $(() => {
+    // 开发模块
+    let $tempShow = $('#tempShow');
+    // 隐藏开发模块
+    // $tempShow.show();
+    // 临时DOM
+    let $tempDOM = $('#tempDOM');
+    // 隐藏临时DOM
+    // $tempDOM.show();
+
     // 克隆input 到 tempDOM
     let cloneDOM = ($tempDOM, DOM) => {
         $tempDOM.html(DOM);
-    }
-
-    // 开发模块：展示处理后的DOM
-    let showDOM = (DOM) => {
-        let $tempShow = $('#tempShow');
-        $tempShow.text(DOM);
     }
 
     // attr
@@ -30,7 +33,7 @@ $(() => {
 
     let $format = $('#format');
     let $formatInput = $format.find('input');
-    let n = '\n';
+    let n = '';
     $formatInput.eq(0).on('click', (e) => {
         n = '\n';
     });
@@ -130,7 +133,7 @@ $(() => {
         //
         let orgHtml = $tempDOM.html();
 
-        // demo:
+        // 格式化 orgHtml
         orgHtml = $.HTMLFormat(orgHtml, {
             indent_size: (n === '\n') ? 4 : 0,
             wrap: (n === '\n') ? true : false,
@@ -140,6 +143,10 @@ $(() => {
         console.log('HTMLFormat orgHtml: ', orgHtml);
 
         // 开发用模块：查看处理完的 DOM
+        // 开发模块：展示处理后的DOM
+        let showDOM = (DOM) => {
+            $tempShow.text(DOM);
+        }
         showDOM(orgHtml);
 
         // 获取处理后的 DOM
@@ -191,6 +198,7 @@ $(() => {
     // attrHandler
     // 初始化激活默认
     $nameAttrArray.eq(0)[0].checked = true;
+
     let attrHandler = (e) => {
         $nameAttrArray.eq(0)[0].checked = false;
 
@@ -236,13 +244,9 @@ $(() => {
 
         let $input = $('#input');
         let inputVal = $input.val();
-        let $tempDOM = $('#tempDOM');
-        // 隐藏临时DOM
-        // $tempDOM.hide();
 
         // 克隆 input 内容
         cloneDOM($tempDOM, $.trim(inputVal));
-
 
         // 收集 attr
         attr = '';
@@ -259,5 +263,11 @@ $(() => {
 
         // 转译 tempDOM 并输出
         killHandler($tempDOM);
+    });
+
+    $.when($.ajax('package.json')).then((data) => {
+        let v = data.version;
+        $('title').append('_v' + v);
+        $('footer').append(' _v ' + v);
     });
 });
