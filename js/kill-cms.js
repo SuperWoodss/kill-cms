@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-18-05:56:03
+ * @(demo)Last modified time: 2016-08-18-06:15:47
  */
 
 $(() => {
@@ -57,7 +57,7 @@ $(() => {
 
         // cms 规则
         let cms = {
-            begin: '<!--webbot bot="AdvTitleList" nodeid="' + ((nodeid === '') ? '888888' : nodeid) + '" type="0" spanmode="0" dayspan="' + dayspan + '" attr="' + attr + '" comstring="' + n,
+            begin: '<!--webbot bot="AdvTitleList" nodeid="' + ((nodeid === '') ? '888888' : nodeid) + '" type="0" spanmode="0" dayspan="' + dayspan + '" attr="' + attr + '" comstring="',
             lt: '&lt;',
             gt: '&gt;',
             enpquot: '#enpquot#',
@@ -72,7 +72,7 @@ $(() => {
             Title: '<Title length="0">TitlePh</Title>',
             ArticleUrlPh: 'ArticleUrlPh',
             Abstract: '<Abstract>AbstractPh</Abstract>',
-            Subtitle: n + '<Subtitle>SubtitlePh</Subtitle>',
+            Subtitle: '<Subtitle>SubtitlePh</Subtitle>',
             end: '" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->'
         };
 
@@ -149,14 +149,6 @@ $(() => {
         // 获取预处理过的 tempDOM
         let orgHtml = $tempDOM.html();
 
-        // 格式化 orgHtml
-        orgHtml = $.HTMLFormat(orgHtml, {
-            indent_size: (n === '\n') ? 4 : 0,
-            wrap: (n === '\n') ? true : false,
-            indent_character: (n === '\n') ? ' ' : '',
-        });
-        console.log('HTMLFormat orgHtml: ', orgHtml);
-
         // 开发模块：展示处理后的DOM
         let showDOM = (DOM) => {
             $tempShow.text(DOM);
@@ -188,13 +180,13 @@ $(() => {
 
             // 转换 orgHtml
             orgHtml =
-                `${n}<ul${ulClass}>
+                `<ul${ulClass}>
                     <Repeat Begin=0 End=${size}>
                         <Article>
                             <li${liClass}>${$li.eq(0).html()}</li>
                         </Article>
                     </Repeat>
-                </ul>${n}`;
+                </ul>`;
         } else {
             // 添加 Article
             orgHtml = '<Article>' + n + orgHtml + n + '</Article>' + n;
@@ -204,6 +196,13 @@ $(() => {
             }
         }
 
+        // 格式化 orgHtml
+        orgHtml = $.HTMLFormat(orgHtml, {
+            indent_size: (n === '\n') ? 4 : 0,
+            wrap: (n === '\n') ? true : false,
+            indent_character: (n === '\n') ? ' ' : '',
+        });
+        console.log('HTMLFormat orgHtml: ', orgHtml);
         // console.log('orgHtml1:', orgHtml);
 
         // 使用正则转码
@@ -222,8 +221,10 @@ $(() => {
 
         // 重新给 outputTemp 赋值
         outputTemp =
-            cms.begin + n +
-            orgHtml + n +
+            cms.begin +
+            n +
+            orgHtml +
+            n +
             cms.end;
 
         console.log(outputTemp);
