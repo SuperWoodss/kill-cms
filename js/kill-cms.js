@@ -7,17 +7,17 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-18-02:03:59
+ * @(demo)Last modified time: 2016-08-18-05:37:31
  */
 
 $(() => {
     // 开发模块
     let $tempShow = $('#tempShow');
-    // 隐藏开发模块
-    // $tempShow.show();
     // 临时DOM
     let $tempDOM = $('#tempDOM');
-    // 隐藏临时DOM
+
+    // 隐藏临时DOM 和 开发模块
+    // $tempShow.show();
     // $tempDOM.show();
 
     // 克隆input 到 tempDOM
@@ -40,6 +40,12 @@ $(() => {
     $formatInput.eq(1).on('click', (e) => {
         n = '';
     });
+
+    // 判断是否有 class
+    let classHandle = ($tag) => {
+        let className = $tag.attr('class');
+        return (className.length > 0) ? ` class="${className}"` : '';
+    }
 
     // killHandler
     let killHandler = ($tempDOM) => {
@@ -79,10 +85,12 @@ $(() => {
         let imgHeight = $img.attr('height');
 
         // 处理 a 内部内容
+        // let aHandler = () => {
         $a.each((i, e) => {
             let $this = $(e);
-
-            if ($this.find('img').length === 0) {
+            console.log('$a0:', $this.find('img').size() === 0);
+            console.log('$a1:', $this.text().indexOf('详细') !== 0);
+            if ($this.find('img').size() === 0 && $this.text().indexOf('详细') !== 0) {
                 $this.text(cms.Title);
             }
             // else {
@@ -91,13 +99,18 @@ $(() => {
             //     $this.html(html);
             // }
         });
+        // };
+        // aHandler();
 
         // 处理 $abs
         $abs.each((i, e) => {
             let $this = $(e);
-            if ($this.find('a')) {
+            // console.log('$abs0:', $this.find('a').size() > 0);
+            if ($this.find('a').size() > 0) {
                 let aText = $this.find('a').text();
-                $this.text(cms.Abstract + 'URL_BEGIN<a href="' + cms.ArticleUrlPh + '">URL_END' + aText + '</a>');
+                console.log('$abs1:', aText);
+                // $this.text(cms.Abstract + 'URL_BEGIN<a href="' + cms.ArticleUrlPh + '">URL_END' + aText + '</a>');
+                $this.text(`${cms.Abstract}URL_BEGIN<a href="${cms.ArticleUrlPh}">URL_END${aText}</a>`);
             } else {
                 $this.text(cms.Abstract);
             }
@@ -106,8 +119,8 @@ $(() => {
         // 处理 $subTitle
         $subTitle.each((i, e) => {
             let $this = $(e);
-            if ($this.find('a')) {
-                $this.text('URL_BEGIN<a href="' + cms.ArticleUrlPh + '">URL_END' + cms.Subtitle + '</a>');
+            if ($this.find('a').size() > 0) {
+                $this.text(`URL_BEGIN<a href="${cms.ArticleUrlPh}">URL_END${cms.Subtitle}</a>`);
             } else {
                 $this.text(cms.Subtitle);
             }
@@ -138,7 +151,6 @@ $(() => {
             indent_size: (n === '\n') ? 4 : 0,
             wrap: (n === '\n') ? true : false,
             indent_character: (n === '\n') ? ' ' : '',
-            // max_char: 0x10000000
         });
         console.log('HTMLFormat orgHtml: ', orgHtml);
 
@@ -153,15 +165,33 @@ $(() => {
         let $li = $ul.find('li');
         let size = $li.size();
         console.log(size);
+
         if ($ul && size > 1) {
+            // orgHtml =
+            //     '<ul' + (($ul.hasClass('list')) ? ' class="list"' : '') + '>' + n +
+            //     '<Repeat Begin=0 End=' + size + '>' + n +
+            //     '<Article>' + n +
+            //     '<li>' + $li.eq(0).html() + '</li>' + n +
+            //     '</Article>' + n +
+            //     '</Repeat>' + n +
+            //     '</ul>' + n;
+
+            // 处理 ul 的 class
+            let ulClass = classHandle($ul);
+            console.log(ulClass);
+
+            // 处理 li 的 class
+            let liClass = classHandle($li);
+            console.log(liClass);
+
             orgHtml =
-                '<ul' + (($ul.hasClass('list')) ? ' class="list"' : '') + '>' + n +
-                '<Repeat Begin=0 End=' + size + '>' + n +
-                '<Article>' + n +
-                '<li>' + $li.eq(0).html() + '</li>' + n +
-                '</Article>' + n +
-                '</Repeat>' + n +
-                '</ul>' + n;
+                `${n}<ul${ulClass}>
+                    <Repeat Begin=0 End=${size}>
+                        <Article>
+                            <li${liClass}>${$li.eq(0).html()}</li>
+                        </Article>
+                    </Repeat>
+                </ul>${n}`;
         } else {
             // 添加 Article
             orgHtml = '<Article>' + n + orgHtml + n + '</Article>' + n;
@@ -271,3 +301,14 @@ $(() => {
         $('footer').append(' _v ' + v);
     });
 });
+
+
+// var people = ['Wayou', 'John', 'Sherlock'];
+// //sayHello函数本来接收三个单独的参数人妖，人二和人三
+// function sayHello(people1, people2, people3) {
+//     `${people1}`
+//     console.log(`Hello ${people1},${people2},${people3}`);
+// }
+// //但是我们将一个数组以拓展参数的形式传递，它能很好地映射到每个单独的参数
+// sayHello(...people); //输出：Hello Wayou,John,Sherlock
+// `${people}`
