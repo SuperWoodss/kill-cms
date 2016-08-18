@@ -18,7 +18,7 @@
     </h1>
     <div class="box">
         <div class="section">
-            <label>HTML:</label>
+            <label>HTML (Article):</label>
             <textarea class="textarea" id="input">
                 <a href="#">
                     <img src="local/1.png" width="598" height="397" alt=""> </a>
@@ -29,29 +29,37 @@
             <textarea class="textarea" id="output"> </textarea>
         </div>
     </div>
-    <div class="tools">
-        <label>nodeid:
+    <div class="tools format" id="format">
+        <label class="format">代码格式:</label>
+        <label>
+            <input type="radio" name="format"> 折行</label>
+        <label>
+            <input type="radio" name="format" checked> 连续</label>
+    </div>
+    <div class="tools flex-star">
+        <label>信息片:
             <input id="nodeid"> </label>
         <div class="attrBox" id="attr">
-            <label class="attr">attr:</label>
+            <label class="attr">属性:</label>
             <label>
-                <input type="checkbox" name="attr" value="">默认</label>
+                <input type="checkbox" name="attr" value=""> 默认</label>
             <label>
-                <input type="checkbox" name="attr" value="61">图片(61)</label>
+                <input type="checkbox" name="attr" value="61"> 图片(61)</label>
             <label>
-                <input type="checkbox" name="attr" value="62">头条(62)</label>
+                <input type="checkbox" name="attr" value="62"> 头条(62)</label>
             <label>
-                <input type="checkbox" name="attr" value="63">普通(63)</label>
+                <input type="checkbox" name="attr" value="63"> 普通(63)</label>
         </div>
-        <label>repeat:
+        <label>循环:
             <input type="number" id="repeat"> </label>
-        <button class="btn btn-primary" id="submit">转 换</button>
+        <button class="btn btn-primary" id="submit"> 转 换 </button>
     </div>
     <div class="tempShow" id="tempShow"> tempShow </div>
     <div class="tempDOM" id="tempDOM"> tempDOM </div>
     <footer>&copy; 2016 Xinhuanet.com / Powered by SuperWoods / MIT license / v0.0.1 </footer>
     <!-- js -->
     <script src="js/jq.js"></script>
+    <script src="js/jquery.HTMLFormat.js"></script>
     <!-- <script src="js/ZeroClipboard.min.js"></script> -->
     <!-- kill-cms -->
     <script src="bundle/kill-cms.min.js"></script>

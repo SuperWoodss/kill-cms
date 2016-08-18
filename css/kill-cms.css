@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:46:50
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-15-12:14:18
+ * @(demo)Last modified time: 2016-08-18-11:04:55
  */
 @import "../css/normalize.css";
 label input {
@@ -251,6 +251,12 @@ footer {
     color     : #999;
     font-style: oblique;
 }
+/*footer a {
+    display: inline;
+}
+footer a.active {
+    color: orange;
+}*/
 /* ----------------------------------------------------------------------------- bigTitle */
 .bigTitle {
     color              : #e5004f;
@@ -282,14 +288,13 @@ label:first-of-type {
     margin-left: 0;
 }
 .box,
+.section,
 .section textarea {
     min-height: 500px;
 }
 .box {
     flex-direction : row;
     justify-content: space-between;
-    /*flex-grow      : 1;*/
-    min-height     : 600px;
     padding        : 10px 0;
 }
 .section {
@@ -314,7 +319,7 @@ label:first-of-type {
     background-color: transparent;
 }
 .tempDOM {
-    display         : none;
+    /*display         : none;*/
     background-color: #f1f1f1;
     padding         : 6px;
     border          : #999 1px solid;
@@ -340,11 +345,11 @@ label:first-of-type {
 /* ----------------------------------------------------------------------------- tools */
 .tools {
     position       : relative;
-    padding        : 10px 0;
+    padding        : 5px 0;
     flex-direction : row;
     line-height    : 34px;
     flex-grow      : 0;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items    : center;
 }
 .tools .btn {
@@ -352,6 +357,7 @@ label:first-of-type {
     right   : 0;
     left    : auto;
     position: absolute;
+    /*top     : 0;*/
 }
 .tools label {
     margin: 0 10px;
@@ -359,10 +365,25 @@ label:first-of-type {
 .tools label:first-of-type {
     margin-left: 0;
 }
+.tools label:last-of-type {
+    margin-right: 0;
+}
 .attrBox {
     padding       : 0 10px;
     flex-direction: row;
 }
 .attrBox label {
     margin: 0 6px;
+}
+.flex-star {
+    justify-content: flex-start;
+}
+/* ----------------------------------------------------------------------------- format */
+.format {
+    justify-content: flex-end;
+    flex-direction : row;
+    align-items    : flex-end;
+}
+.btnBox {
+    height: 40px;
 }
