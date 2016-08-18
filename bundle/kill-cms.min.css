@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:46:50
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-15-12:14:18
+ * @(demo)Last modified time: 2016-08-18-02:07:37
  */
 /*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
 
@@ -722,12 +722,21 @@ body {
 }
 /* ----------------------------------------------------------------------------- footer */
 footer {
-    font-size : 12px;
-    margin-top: 10px;
-    text-align: right;
-    color     : #999;
-    font-style: oblique;
+    font-size  : 12px;
+    text-align : right;
+    color      : #999;
+    font-style : oblique;
+    border-top : #CCC 1px solid;
+    /*padding-top: 5px;*/
+    margin-top : 20px;
+    line-height: 22px;
 }
+/*footer a {
+    display: inline;
+}
+footer a.active {
+    color: orange;
+}*/
 /* ----------------------------------------------------------------------------- bigTitle */
 .bigTitle {
     color              : #e5004f;
@@ -761,6 +770,7 @@ label:first-of-type {
     margin-left: 0;
 }
 .box,
+.section,
 .section textarea {
     min-height: 500px;
 }
@@ -772,8 +782,6 @@ label:first-of-type {
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    /*flex-grow      : 1;*/
-    min-height     : 600px;
     padding        : 10px 0;
 }
 .section {
@@ -806,7 +814,7 @@ label:first-of-type {
     background-color: transparent;
 }
 .tempDOM {
-    display         : none;
+    /*display         : none;*/
     background-color: #f1f1f1;
     padding         : 6px;
     border          : #999 1px solid;
@@ -832,7 +840,7 @@ label:first-of-type {
 /* ----------------------------------------------------------------------------- tools */
 .tools {
     position       : relative;
-    padding        : 10px 0;
+    padding        : 5px 0;
     -webkit-box-orient : horizontal;
     -webkit-box-direction : normal;
         -ms-flex-direction : row;
@@ -841,9 +849,9 @@ label:first-of-type {
     -webkit-box-flex      : 0;
         -ms-flex-positive      : 0;
             flex-grow      : 0;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     -webkit-box-align    : center;
         -ms-flex-align    : center;
                 -ms-grid-row-align    : center;
@@ -854,12 +862,16 @@ label:first-of-type {
     right   : 0;
     left    : auto;
     position: absolute;
+    /*top     : 0;*/
 }
 .tools label {
     margin: 0 10px;
 }
 .tools label:first-of-type {
     margin-left: 0;
+}
+.tools label:last-of-type {
+    margin-right: 0;
 }
 .attrBox {
     padding       : 0 10px;
@@ -870,4 +882,26 @@ label:first-of-type {
 }
 .attrBox label {
     margin: 0 6px;
+}
+.flex-star {
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+}
+/* ----------------------------------------------------------------------------- format */
+.format {
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    -webkit-box-orient : horizontal;
+    -webkit-box-direction : normal;
+        -ms-flex-direction : row;
+            flex-direction : row;
+    -webkit-box-align    : end;
+        -ms-flex-align    : end;
+                -ms-grid-row-align    : flex-end;
+            align-items    : flex-end;
+}
+.btnBox {
+    height: 40px;
 }

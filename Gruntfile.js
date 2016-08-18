@@ -96,27 +96,10 @@ module.exports = function (grunt) {
 
         concat: { //css文件合并
             options: {
-                //all 不删除注释，还可以为 false（删除全部注释），some（保留@preserve @license @cc_on等注释）
-                // preserveComments: 'false',
+                preserveComments: false,
                 banner: '<%= banner %>',
                 stripBanners: true
             },
-            // js: {
-            //     /*
-            //         输出路径: [
-            //             输入路径,
-            //             输入路径
-            //         ]
-            //     */
-            //     files: {
-            //         '<%= config.dist %>/dist/index.js': [ // bundle js
-            //             "<%= config.src %>/js/jq.js",
-            //             "<%= config.src %>/js/swiper.jquery.min.js",
-            //             // "<%= config.src %>/js/echarts-all.js",
-            //             "<%= config.src %>/bundle/index.js",
-            //         ],
-            //     },
-            // },
             cssAddBanner: {
                 files: [{
                     expand: true,
@@ -130,9 +113,7 @@ module.exports = function (grunt) {
         cssmin: {
             execute: {
                 files: {
-                    'bundle/index.min.css': ['bundle/index.min.css'],
-                    'bundle/content.min.css': ['bundle/content.min.css'],
-                    'bundle/mobile.min.css': ['bundle/mobile.min.css'],
+                    'bundle/kill-cms.min.css': ['bundle/kill-cms.min.css'],
                 }
             }
         },
@@ -146,9 +127,8 @@ module.exports = function (grunt) {
             },
             execute: {
                 files: {
-                    'bundle/index.min.js': ['bundle/index.min.js'],
-                    'bundle/nav_footer.min.js': ['bundle/nav_footer.min.js'],
-                    'bundle/mobile.min.js': ['bundle/mobile.min.js'],
+                    'bundle/kill-cms.min.js': ['bundle/kill-cms.min.js'],
+                    'js/jquery.HTMLFormat.min.js': ['js/jquery.HTMLFormat.js'],
                 }
             }
         },
