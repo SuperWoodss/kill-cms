@@ -13,7 +13,7 @@
 
 <body>
     <h1 class="bigTitle">
-        KILL CMS
+        <p><span class="black">KILL</span><span class="yellow">CMS</span></p>
         <small><a href="readme.html" target="_blank">How to use? </a></small>
     </h1>
     <div class="box">
@@ -33,22 +33,24 @@
         <label>
             <input type="radio" name="format" checked> 连续</label>
     </div>
-    <div class="tools flex-star">
-        <label>信息片:
-            <input id="nodeid"> </label>
-        <div class="attrBox" id="attr">
-            <label class="attr">属性:</label>
-            <label>
-                <input type="checkbox" name="attr" value=""> 默认</label>
-            <label>
-                <input type="checkbox" name="attr" value="61"> 图片(61)</label>
-            <label>
-                <input type="checkbox" name="attr" value="62"> 头条(62)</label>
-            <label>
-                <input type="checkbox" name="attr" value="63"> 普通(63)</label>
+    <div class="tools">
+        <div class="toolLeft">
+            <label>信息片:
+                <input id="nodeid"> </label>
+            <div class="attrBox" id="attr">
+                <label class="attr">属性:</label>
+                <label>
+                    <input type="checkbox" name="attr" value=""> 默认</label>
+                <label>
+                    <input type="checkbox" name="attr" value="61"> 图片(61)</label>
+                <label>
+                    <input type="checkbox" name="attr" value="62"> 头条(62)</label>
+                <label>
+                    <input type="checkbox" name="attr" value="63"> 普通(63)</label>
+            </div>
+            <label>循环:
+                <input type="number" id="repeat"> </label>
         </div>
-        <label>循环:
-            <input type="number" id="repeat"> </label>
         <button class="btn btn-primary" id="submit"> 转 换 </button>
     </div>
     <div class="tempShow hide" id="tempShow"> tempShow </div>
