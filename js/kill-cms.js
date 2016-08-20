@@ -7,18 +7,12 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-18-08:28:38
+ * @(demo)Last modified time: 2016-08-20-03:54:11
  */
 
 $(() => {
-    // 开发模块
-    let $tempShow = $('#tempShow');
-    // 临时DOM
-    let $tempDOM = $('#tempDOM');
-
-    // 隐藏临时DOM和开发模块
-    // $tempShow.show();
-    // $tempDOM.show();
+    // kill 参数数组
+    let killConfigArray = [];
 
     // 克隆input 到 tempDOM
     let cloneDOM = ($tempDOM, DOM) => {
@@ -26,15 +20,16 @@ $(() => {
     }
 
     // attr
-    let attr = '';
-    let $attr = $('#attr');
-    let $attrText = $attr.find('.attr');
-    let $nameAttrArray = $attr.find('[name="attr"]');
+    // let attr = '';
+    // let $attr = $('#attr');
+    // let $attrText = $attr.find('.attr');
+    // let $nameAttrArray = $attr.find('[name="attr"]');
 
     // 是否折行 （‘\n’）
     let $format = $('#format');
     let $formatInput = $format.find('input');
-    let wrap = '';
+    // let wrap = ''; // 起始选中连续
+    let wrap = '\n';
     $formatInput.eq(0).on('click', (e) => {
         wrap = '\n';
     });
@@ -49,15 +44,40 @@ $(() => {
     }
 
     // 主处理器 killHandler
-    let killHandler = ($tempDOM) => {
-        let $output = $('#output');
-        let nodeid = $('#nodeid').val();
-        let repeat = $('#repeat').val();
-        let dayspan = (repeat < 200) ? 0 : repeat;
+    let killHandler = ($tempDOM, i) => {
+
+        console.log($tempDOM[0], i);
+
+        // 声明 killAttr属性 array:([0]:中文名, [1]:nodeid, [2]:attr);
+        let killAttrs = killConfigArray[i] ? killConfigArray[i] : ['null', '888888', 'null'];
+
+        console.log('killAttrs:', killAttrs);
+
+        // 预处理 tempDOM
+        let $a = $tempDOM.find('a');
+        let $abs = $tempDOM.find('.abs');
+        let $subTitle = $tempDOM.find('.subTitle');
+        let $img = $tempDOM.find('img');
+        let imgWidth = $img.attr('width');
+        let imgHeight = $img.attr('height');
+
+        // 声明 nodeid,attr, repeat
+        let nodeid = killAttrs[1];
+        let attr = killAttrs[2];
+        let repeat = 0;
+        // (() => {
+        //     let $div = $tempDOM.find('div');
+        //     if ($div) {
+        //         let divSize = $div.size();
+        //         if (divSize > 0) {
+        //             return divSize;
+        //         }
+        //     }
+        // })();
+        let dayspan = (repeat < 200 || dayspan === undefined) ? 0 : repeat;
 
         // cms 规则
         let cms = {
-            begin: '<!--webbot bot="AdvTitleList" nodeid="' + ((nodeid === '') ? '888888' : nodeid) + '" type="0" spanmode="0" dayspan="' + dayspan + '" attr="' + attr + '" comstring="',
             lt: '&lt;',
             gt: '&gt;',
             enpquot: '#enpquot#',
@@ -65,34 +85,23 @@ $(() => {
                 needcode: [
                     '<img data-src="<Picture needcode=0>PictureUrlPh</Picture>">',
                     '<img data-original="<Picture needcode=0>PictureUrlPh</Picture>">',
+                    `<Picture needcode=1 width=${(imgWidth)?imgWidth:100} height=${(imgHeight)?imgHeight:100}>PictureUrlPh</Picture>`,
                     // '<img data-src="<Picture needcode=0>PictureUrlPh</Picture>" width="' + imgWidth + '" height="' + imgHeight + '" alt="<Title length="0">TitlePh</Title>">',
-                    '<Picture needcode=1 width=100 height=100>PictureUrlPh</Picture>'
                 ]
             },
             Title: '<Title length="0">TitlePh</Title>',
             ArticleUrlPh: 'ArticleUrlPh',
             Abstract: '<Abstract>AbstractPh</Abstract>',
             Subtitle: '<Subtitle>SubtitlePh</Subtitle>',
-            end: '" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->'
         };
 
-        // 预处理 tempDOM
-        // console.log('orgHtml0:', $tempDOM.html());
-        let $a = $tempDOM.find('a');
-        let $abs = $tempDOM.find('.abs');
-        let $subTitle = $tempDOM.find('.subTitle');
-        let $ul = $tempDOM.find('ul');
-
-        let $img = $tempDOM.find('img');
-        let imgWidth = $img.attr('width');
-        let imgHeight = $img.attr('height');
 
         // 处理 a 内部内容
         // let aHandler = () => {
         $a.each((i, e) => {
             let $this = $(e);
-            console.log('$a0:', $this.find('img').size() === 0);
-            console.log('$a1:', $this.text().indexOf('详细') !== 0);
+            // console.log('$a0:', $this.find('img').size() === 0);
+            // console.log('$a1:', $this.text().indexOf('详细') !== 0);
             if ($this.find('img').size() === 0 && $this.text().indexOf('详细') !== 0) {
                 $this.text(cms.Title);
             }
@@ -109,7 +118,7 @@ $(() => {
             // console.log('$abs0:', $this.find('a').size() > 0);
             if ($this.find('a').size() > 0) {
                 let aText = $this.find('a').text();
-                console.log('$abs1:', aText);
+                console.log('$abs1:\n', aText);
                 // $this.text(cms.Abstract + 'URL_BEGIN<a href="' + cms.ArticleUrlPh + '">URL_END' + aText + '</a>');
                 $this.text(`${cms.Abstract}URL_BEGIN<a href="${cms.ArticleUrlPh}">URL_END${aText}</a>`);
             } else {
@@ -147,42 +156,73 @@ $(() => {
         // 获取预处理过的 tempDOM
         let orgHtml = $tempDOM.html();
 
-        // 开发模块：展示处理后的DOM
-        let showDOM = (DOM) => {
-            $tempShow.text(DOM);
-        }
-        showDOM(orgHtml);
-
         // 处理 li DOM
-        let $li = $ul.find('li');
-        let size = $li.size();
-        console.log(size);
+        console.log('ul:', $tempDOM.is('ul'));
+        console.log('div:', $tempDOM.hasClass('swiper-wrapper'));
 
-        if ($ul && size > 1) {
-            // 处理 ul 的 class
-            let ulClass = classHandler($ul);
-            console.log(ulClass);
+        let outputType = 'html';
+        let $ul = $tempDOM;
 
-            // 处理 li 的 class
-            let liClass = classHandler($li);
-            console.log(liClass);
+        if ($tempDOM.is('ul')) {
 
-            // 转换 orgHtml
-            orgHtml =
-                `<ul${ulClass}>
-                    <Repeat Begin=0 End=${size}>
+            // ul 处理
+            let $li = $ul.children('li');
+            let size = $li.size();
+
+            console.log('li DOM1:', size > 1);
+
+            if (size > 1) {
+                // 处理 ul 的 class
+                let ulClass = classHandler($ul);
+                console.log(ulClass);
+
+                // 处理 li 的 class
+                let liClass = classHandler($li);
+                console.log(liClass);
+
+                // 转换 orgHtml
+                orgHtml =
+                    `<ul${ulClass} kill="${killAttrs}">
+                        <Repeat Begin=0 End=${size}>
+                            <Article>
+                                <li${liClass}>${$li.eq(0).html()}</li>
+                            </Article>
+                        </Repeat>
+                    </ul>`;
+                outputType = 'replaceWith';
+            }
+
+        } else if ($tempDOM.children('div').size() > 1) {
+
+            // rot swiper-wrapper 处理
+            let $li = $ul.children('div');
+            let size = $li.size();
+
+            console.log('div DOM1:', size > 1);
+
+            if (size > 1) {
+                // 处理 ul 的 class
+                let ulClass = classHandler($ul);
+                console.log(ulClass);
+                // 处理 li 的 class
+                let liClass = classHandler($li);
+                console.log(liClass);
+                // 转换 orgHtml
+                orgHtml =
+                    `<Repeat Begin=0 End=${size}>
                         <Article>
-                            <li${liClass}>${$li.eq(0).html()}</li>
+                            <div${liClass}>${$li.eq(0).html()}</div>
                         </Article>
-                    </Repeat>
-                </ul>`;
+                    </Repeat>`;
+            }
+
         } else {
             // 添加 Article
             orgHtml = `<Article>${orgHtml}</Article>`;
-            // 添加 Repeat
-            if (repeat !== '' && repeat > 0) {
-                orgHtml = `<Repeat Begin=0 End=${repeat}>${orgHtml}</Repeat>`;
-            }
+            // // 添加 Repeat
+            // if (repeat !== '' && repeat > 0) {
+            //     orgHtml = `<Repeat Begin=0 End=${repeat}>${orgHtml}</Repeat>`;
+            // }
         }
 
         // 格式化 orgHtml
@@ -191,7 +231,8 @@ $(() => {
             wrap: (wrap === '\n') ? true : false,
             indent_character: (wrap === '\n') ? ' ' : '',
         });
-        console.log('HTMLFormat orgHtml: ', orgHtml);
+
+        console.log('HTMLFormat:\n', orgHtml);
         // console.log('orgHtml1:', orgHtml);
 
         // 使用正则转码
@@ -203,74 +244,31 @@ $(() => {
             .replace(/>/g, cms.gt)
             .replace(/"/g, cms.enpquot);
 
-        console.log('newHtml:', orgHtml);
-
-        // 清空 outputTemp
-        let outputTemp = '';
+        // console.log('newHtml:', orgHtml);
 
         // 重新给 outputTemp 赋值
-        outputTemp =
-            cms.begin +
-            wrap +
-            orgHtml +
-            wrap +
-            cms.end;
+        let outputTemp =
+            `<!--webbot bot="AdvTitleList" nodeid="${(nodeid === '') ? '888888' : nodeid}" type="0" spanmode="0" dayspan="${dayspan}" attr="${(attr === 'null') ? '' : attr}" comstring="${wrap}${orgHtml}${wrap}" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->`;
 
-        console.log(outputTemp);
+        // 给kill 添加内容
+        $tempDOM.attr('kill', killAttrs);
 
-        // 输出结果（必须是字符串）
-        $output.text(outputTemp);
-    }
-
-    // 初始化激活 默认属性
-    $nameAttrArray.eq(0)[0].checked = true;
-
-    // 属性处理器
-    let attrHandler = (e) => {
-        $nameAttrArray.eq(0)[0].checked = false;
-
-        let $this = $(e.currentTarget);
-        let v = '+' + $this.val();
-        console.log(v);
-
-        console.log($this[0].checked && v !== '+');
-
-        if ($this[0].checked && v !== '+') {
-            $this.attr('data-attr', v);
-        } else {
-            $this.attr('data-attr', '');
+        // 输出结果至 kill DOM位置
+        if (outputType === 'html') {
+            $tempDOM.html(outputTemp);
+        } else if (outputType === 'replaceWith') {
+            $tempDOM.replaceWith(outputTemp);
         }
-        //
-        // if (attr !== '' || v !== '+') {
-        //     $attrText.text(attr);
-        // } else {
-        //     $attrText.text('默认');
-        // }
     }
-
-    // 当属性改变时
-    $nameAttrArray.on('change', (e) => {
-        let $this = $(e.currentTarget);
-        if ($this.val() !== '') {
-            attrHandler(e);
-        } else {
-            // 点击默认列表关闭其它属性
-            $nameAttrArray
-                .attr('data-attr', '')
-                .each((i, e) => {
-                    let $this = $(e);
-                    if (i === 0) {
-                        $this[0].checked = true;
-                    } else {
-                        $this[0].checked = false;
-                    }
-                });
-        }
-    });
 
     // 提交
     let $submit = $('#submit');
     $submit.on('click', () => {
+        // 临时DOM
+        let $tempDOM = $('#tempDOM');
+
+        // 隐藏临时DOM
+        // $tempDOM.show();
 
         let $input = $('#input');
         let inputVal = $input.val();
@@ -278,38 +276,60 @@ $(() => {
         // 克隆 input 内容转为 killHandler 可以处理的 DOM结构
         cloneDOM($tempDOM, $.trim(inputVal));
 
-        // 收集输出 attr
-        attr = '';
-        $('#attr')
-            .find('input')
-            .each((i, e) => {
-                let v = $(e).attr('data-attr');
-                console.log(v);
-                if (v) {
-                    attr += v;
-                }
-            });
-        console.log('attr:', attr);
+        // 获取 kill-cms节点
+        let $killCms = $tempDOM.find('[kill]');
 
-        // 转译 tempDOM 并输出
-        killHandler($tempDOM);
+        // 获取 killConfig
+        let $killConfig = $tempDOM.find('#killConfig');
+        let $killConfigLi = $killConfig.find('li');
+
+        $killConfigLi.each((i, e) => {
+            let t = $(e).text();
+            t = t.split(',');
+
+            t[0] = $.trim(t[0]); // 栏目名
+            t[1] = $.trim(t[1]); // 信息片
+            t[2] = $.trim(t[2]); // 属性
+
+            // 转换 attr
+            // console.log(t[1].indexOf('默认') >= 0);
+            if (t[2].indexOf('默认') >= 0 || t[1] === '') {
+                t[2] = 'null';
+            } else {
+                t[2] = t[2]
+                    .replace('图片', '+61')
+                    .replace('头条', '+62')
+                    .replace('普通', '+63');
+            }
+            killConfigArray.push(t);
+        });
+        // let killCmsLen = $killCms.length;
+        // let killConfigLiLen = $killConfigLi.length;
+
+
+        // 移除 tempDOM 的 #killConfig
+        $killConfig.remove();
+
+        // killHandler each
+        $killCms.each((i, e) => {
+            killHandler($(e), i);
+        });
+
+        // 输出结果
+        let $output = $('#output');
+        $output.text($tempDOM.html());
+
+        // if (killCmsLen <= killConfigLiLen) {
+        //
+        // } else {
+        //     alert(`请检查"killConfig"配置, 我们发现似乎缺少"${killCmsLen - killConfigLiLen}"个项目`);
+        // }
     });
 
     // footer添加版本信息，读取 package.json 中 version对象
     $.when($.ajax('package.json')).then((data) => {
         let v = data.version;
-        $('title').append('_v' + v);
-        $('footer').append(' _v ' + v);
+        $('title').append(' v' + v);
+        $('#version').append(' v ' + v);
     });
 });
-
-
-// var people = ['Wayou', 'John', 'Sherlock'];
-// //sayHello函数本来接收三个单独的参数人妖，人二和人三
-// function sayHello(people1, people2, people3) {
-//     `${people1}`
-//     console.log(`Hello ${people1},${people2},${people3}`);
-// }
-// //但是我们将一个数组以拓展参数的形式传递，它能很好地映射到每个单独的参数
-// sayHello(...people); //输出：Hello Wayou,John,Sherlock
-// `${people}`

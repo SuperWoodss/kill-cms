@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:46:50
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-20-03:50:38
+ * @(demo)Last modified time: 2016-08-19-06:45:28
  */
 @import "../css/normalize.css";
 label input {
@@ -256,43 +256,14 @@ footer {
     margin-top : 20px;
     line-height: 22px;
 }
-.bigTitle small {
-    width      : 300px;
-    position   : relative;
-    color      : #f20000;
-    font-size  : 16px;
-    line-height: 16px;
-    text-align : right;
-    /*display    : block;*/
-}
-.bigTitle small span:first-of-type {
-    display : inline;
-    color   : #999;
-    position: absolute;
-    top     : 0;
-    right   : 0;
-}
-.bigTitle small span:last-of-type {
-    display : inline;
-    width   : 100%;
-    color   : #CCC;
-    position: absolute;
-    bottom  : 0;
-    right   : 0;
-}
-.bigTitle small span a {
-    display: inline;
-    color  : #000;
-}
-.bigTitle small span a:last-of-type {
-    font-style: oblique;
-    color     : #f20000;
-}
+.bigTitle small a,
 footer a {
-    font-style: oblique;
-    display   : inline;
-    color     : #f20000;
+    display: inline;
+    color  : orange;
 }
+/*footer a.active {
+    color: orange;
+}*/
 /* ----------------------------------------------------------------------------- bigTitle */
 .bigTitle {
     /*color          : #000;*/
@@ -336,6 +307,18 @@ footer a {
     border-top-left-radius   : 0;
     border-bottom-left-radius: 0;
 }
+.bigTitle small {
+    font-style : oblique;
+    color      : #f20000;
+    font-size  : 16px;
+    line-height: 20px;
+    text-align : left;
+    /*font-weight: 400;*/
+}
+.bigTitle small a {
+    color: #f20000;
+    /*text-decoration: none;*/
+}
 /* ----------------------------------------------------------------------------- */
 label {
     margin: 0 15px;
@@ -346,7 +329,7 @@ label:first-of-type {
 .box,
 .section,
 .section textarea {
-    min-height: 70vh;
+    min-height: 400px;
 }
 .box {
     flex-direction : row;
@@ -405,8 +388,7 @@ label:first-of-type {
     flex-direction : row;
     line-height    : 34px;
     flex-grow      : 0;
-    /*justify-content: space-between;*/
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items    : center;
     align-content  : flex-start;
 }
