@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+    <meta name="renderer" content="webkit">
+    <title>KILL CMS README.md</title>
+    <base target="_blank">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="README.resources/styles.css">
+    <link rel="stylesheet" href="README.resources/github-light.css">
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>KILL CMS README.md</h1>
+            <p>just kill 🎯 🔪</p>
+            <p id="version">version:</p>
+            <ul>
+                <li><a href="https://xinhuaradiolab.github.io/kill-cms/">Open <strong>Websit</strong></a></li>
+                <li></li>
+                <li><a href="https://github.com/xinhuaRadioLAB/kill-cms">View On <strong>GitHub</strong></a></li>
+            </ul>
+        </header>
+        <section id="md">README.md</section>
+        <footer>
+            <p>&copy; 2016 Xinhuanet.com / MIT license</p>
+        </footer>
+    </div>
+    <script src="js/jq.js"></script>
+    <script src="README.resources/marked.min.js"></script>
+    <script src="README.resources/jquery.md.js"></script>
+    <script>
+        // footer添加版本信息，读取 package.json 中 version对象
+        $.when($.ajax('package.json')).then((data) => {
+            let v = data.version;
+            $('#version').html('version: ' + v);
+        });
+    </script>
+</body>
+
+</html>
