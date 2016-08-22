@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-22-03:13:38
+ * @(demo)Last modified time: 2016-08-22-03:22:30
  */
 
 $(() => {
@@ -58,7 +58,7 @@ $(() => {
         console.log($tempDOM[0], i);
 
         // 声明 killAttr属性 array:([0]:中文名, [1]:nodeid, [2]:attr);
-        let killAttrs = killConfigArray[i] ? killConfigArray[i] : ['未命名栏目', '888888', '默认'];
+        let killAttrs = killConfigArray[i] ? killConfigArray[i] : [`未命名`, '888888', '默认'];
 
         console.log('killAttrs:', killAttrs);
 
@@ -267,9 +267,9 @@ $(() => {
         // 重新给 outputTemp 赋值
         let outputTemp =
             `
-            <!-- ${killAttrs[0]} BEGIN nodeid:${nodeid}, attr:${attrZh} -->
+            <!-- mod: ${i}, name: ${killAttrs[0]}, nodeid:${nodeid}, attr:${attrZh} BEGIN -->
             <!--webbot bot="AdvTitleList" nodeid="${(nodeid === '') ? '888888' : nodeid}" type="0" spanmode="0" dayspan="${dayspan}" attr="${(attr === '' || attr === 'null' || attr === '默认') ? '' : attr}" comstring="${wrap}${orgHtml}${wrap}" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->
-            <!-- ${killAttrs[0]} END -->
+            <!-- mod: ${i}, name: ${killAttrs[0]} END -->
             `;
 
         // 给kill 添加内容
