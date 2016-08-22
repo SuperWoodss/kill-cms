@@ -7,12 +7,12 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-20-03:54:11
+ * @(demo)Last modified time: 2016-08-22-08:50:31
  */
 
 $(() => {
     // kill 参数数组
-    let killConfigArray = [];
+    let killConfigArray;
 
     // 克隆input 到 tempDOM
     let cloneDOM = ($tempDOM, DOM) => {
@@ -29,13 +29,22 @@ $(() => {
     let $format = $('#format');
     let $formatInput = $format.find('input');
     // let wrap = ''; // 起始选中连续
-    let wrap = '\n';
+    let wrap = '';
     $formatInput.eq(0).on('click', (e) => {
         wrap = '\n';
     });
     $formatInput.eq(1).on('click', (e) => {
         wrap = '';
     });
+
+    // 控制 checked 现实状态
+    if (wrap === '\n') {
+        $formatInput.eq(0).attr('checked', true);
+        $formatInput.eq(1).attr('checked', false);
+    } else {
+        $formatInput.eq(0).attr('checked', false);
+        $formatInput.eq(1).attr('checked', true);
+    }
 
     // 判断是否有 class
     let classHandler = ($tag) => {
@@ -261,17 +270,18 @@ $(() => {
         }
     }
 
+
+
     // 提交
     let $submit = $('#submit');
     $submit.on('click', () => {
-        // 临时DOM
+
+        let $input = $('#input');
+        let inputVal = $input.val();
         let $tempDOM = $('#tempDOM');
 
         // 隐藏临时DOM
         // $tempDOM.show();
-
-        let $input = $('#input');
-        let inputVal = $input.val();
 
         // 克隆 input 内容转为 killHandler 可以处理的 DOM结构
         cloneDOM($tempDOM, $.trim(inputVal));
@@ -279,9 +289,13 @@ $(() => {
         // 获取 kill-cms节点
         let $killCms = $tempDOM.find('[kill]');
 
+        // 重置 killConfigArray
+        killConfigArray = [];
+
         // 获取 killConfig
         let $killConfig = $tempDOM.find('#killConfig');
         let $killConfigLi = $killConfig.find('li');
+
 
         $killConfigLi.each((i, e) => {
             let t = $(e).text();
