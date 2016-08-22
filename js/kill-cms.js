@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-22-08:50:31
+ * @(demo)Last modified time: 2016-08-22-09:14:28
  */
 
 $(() => {
@@ -73,6 +73,7 @@ $(() => {
         // 声明 nodeid,attr, repeat
         let nodeid = killAttrs[1];
         let attr = killAttrs[2];
+
         let repeat = 0;
         // (() => {
         //     let $div = $tempDOM.find('div');
@@ -309,12 +310,26 @@ $(() => {
             // console.log(t[1].indexOf('默认') >= 0);
             if (t[2].indexOf('默认') >= 0 || t[1] === '') {
                 t[2] = 'null';
+
+                // 添加清除重复的中文属性功能
+                t[2] = t[2].replace(new RegExp('默认', 'g'), '');
+
             } else {
                 t[2] = t[2]
                     .replace('图片', '+61')
                     .replace('头条', '+62')
                     .replace('普通', '+63');
+
+                // 添加清除重复的中文属性功能
+                t[2] = t[2]
+                    .replace(new RegExp('图片', 'g'), '')
+                    .replace(new RegExp('头条', 'g'), '')
+                    .replace(new RegExp('普通', 'g'), '');
             }
+
+
+
+
             killConfigArray.push(t);
         });
         // let killCmsLen = $killCms.length;
