@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-22-01:52:50
+ * @(demo)Last modified time: 2016-08-22-03:13:38
  */
 
 $(() => {
@@ -257,7 +257,7 @@ $(() => {
 
         // console.log('newHtml:', orgHtml)
         let attrZh =
-            (attr === '' || attr === null) ?
+            (attr === '' || attr === null || attr === 'null' || attr === '默认') ?
             '默认' :
             attr
             .replace('61', '图片')
@@ -268,7 +268,7 @@ $(() => {
         let outputTemp =
             `
             <!-- ${killAttrs[0]} BEGIN nodeid:${nodeid}, attr:${attrZh} -->
-            <!--webbot bot="AdvTitleList" nodeid="${(nodeid === '') ? '888888' : nodeid}" type="0" spanmode="0" dayspan="${dayspan}" attr="${(attr === 'null' || attr === '默认') ? '' : attr}" comstring="${wrap}${orgHtml}${wrap}" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->
+            <!--webbot bot="AdvTitleList" nodeid="${(nodeid === '') ? '888888' : nodeid}" type="0" spanmode="0" dayspan="${dayspan}" attr="${(attr === '' || attr === 'null' || attr === '默认') ? '' : attr}" comstring="${wrap}${orgHtml}${wrap}" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->
             <!-- ${killAttrs[0]} END -->
             `;
 
