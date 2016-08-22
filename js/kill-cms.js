@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-22-09:14:28
+ * @(demo)Last modified time: 2016-08-22-01:52:50
  */
 
 $(() => {
@@ -58,7 +58,7 @@ $(() => {
         console.log($tempDOM[0], i);
 
         // 声明 killAttr属性 array:([0]:中文名, [1]:nodeid, [2]:attr);
-        let killAttrs = killConfigArray[i] ? killConfigArray[i] : ['null', '888888', 'null'];
+        let killAttrs = killConfigArray[i] ? killConfigArray[i] : ['未命名栏目', '888888', '默认'];
 
         console.log('killAttrs:', killAttrs);
 
@@ -192,7 +192,8 @@ $(() => {
 
                 // 转换 orgHtml
                 orgHtml =
-                    `<ul${ulClass} kill="${killAttrs}">
+                    // `<ul${ulClass} kill="${killAttrs}">
+                    `<ul${ulClass}>
                         <Repeat Begin=0 End=${size}>
                             <Article>
                                 <li${liClass}>${$li.eq(0).html()}</li>
@@ -254,14 +255,26 @@ $(() => {
             .replace(/>/g, cms.gt)
             .replace(/"/g, cms.enpquot);
 
-        // console.log('newHtml:', orgHtml);
+        // console.log('newHtml:', orgHtml)
+        let attrZh =
+            (attr === '' || attr === null) ?
+            '默认' :
+            attr
+            .replace('61', '图片')
+            .replace('62', '头条')
+            .replace('63', '普通');
 
         // 重新给 outputTemp 赋值
         let outputTemp =
-            `<!--webbot bot="AdvTitleList" nodeid="${(nodeid === '') ? '888888' : nodeid}" type="0" spanmode="0" dayspan="${dayspan}" attr="${(attr === 'null') ? '' : attr}" comstring="${wrap}${orgHtml}${wrap}" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->`;
+            `
+            <!-- ${killAttrs[0]} BEGIN nodeid:${nodeid}, attr:${attrZh} -->
+            <!--webbot bot="AdvTitleList" nodeid="${(nodeid === '') ? '888888' : nodeid}" type="0" spanmode="0" dayspan="${dayspan}" attr="${(attr === 'null' || attr === '默认') ? '' : attr}" comstring="${wrap}${orgHtml}${wrap}" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->
+            <!-- ${killAttrs[0]} END -->
+            `;
 
         // 给kill 添加内容
-        $tempDOM.attr('kill', killAttrs);
+        // $tempDOM.attr('kill', killAttrs);
+        $tempDOM.removeAttr('kill');
 
         // 输出结果至 kill DOM位置
         if (outputType === 'html') {
