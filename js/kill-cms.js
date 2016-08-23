@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-23-10:04:34
+ * @(demo)Last modified time: 2016-08-23-02:07:35
  */
 
 $(() => {
@@ -64,8 +64,20 @@ $(() => {
 
         // 预处理 tempDOM
         let $a = $tempDOM.find('a');
+
+
         let $abs = $tempDOM.find('.abs');
+        // 验证kill 是否和abs在一起
+        if ($tempDOM.attr('class') === 'abs') {
+            $abs = $tempDOM;
+        }
+
         let $subTitle = $tempDOM.find('.subTitle');
+        // 验证subTitle 是否和abs在一起
+        if ($tempDOM.attr('class') === 'subTitle') {
+            $subTitle = $tempDOM;
+        }
+
         let $img = $tempDOM.find('img');
         let imgWidth = $img.attr('width');
         let imgHeight = $img.attr('height');
@@ -274,7 +286,7 @@ $(() => {
 
         // 重新给 outputTemp 赋值
         let outputTemp = `
-        <!-- mod: ${i}, name: ${killAttrs[0]}, nodeid:${nodeid}, attr:${attrZh}, rpt:${repeat} BEGIN -->
+        <!-- { mod: ${i}, name: ${killAttrs[0]}, nodeid:${nodeid}, attr:${attrZh}, rpt:${repeat} } BEGIN -->
         <!--webbot bot="AdvTitleList" nodeid="${(nodeid === '') ? '888888' : nodeid}" type="0" spanmode="0" dayspan="${dayspan}" attr="${(attr === '' || attr === 'null' || attr === '默认') ? '' : attr}" comstring="${wrap}${orgHtml}${wrap}" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->
         <!-- mod: ${i} END -->
         `;
@@ -361,13 +373,21 @@ $(() => {
 
         // 输出结果
         let $output = $('#output');
-        $output.text($tempDOM.html());
+        $output.text(
+            `<!-- kill-cms 共有配置项:${killConfigArray.length-1}, kill模块数:${$killCms.length-1} BEGIN -->
+${$tempDOM.html()}
+<!-- kill-cms END -->`
+        );
     });
 
     // footer添加版本信息，读取 package.json 中 version对象
-    $.when($.ajax('package.json')).then((data) => {
-        let v = data.version;
-        $('title').append(' v' + v);
-        $('#version').append(' v ' + v);
-    });
+    Promise.resolve($.ajax('package.json'))
+        .then(data => {
+            let v = data.version;
+            $('title').append(' v' + v);
+            $('#version').append(' v ' + v);
+        })
+        .catch(error => {
+            $('body').append(JSON.stringify(error));
+        });
 });
