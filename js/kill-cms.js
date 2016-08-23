@@ -7,7 +7,7 @@
  * @Date:   2016-08-09-06:45:42
  *
  * @(demo)Last modified by:   SuperWoods
- * @(demo)Last modified time: 2016-08-22-03:24:26
+ * @(demo)Last modified time: 2016-08-23-10:04:34
  */
 
 $(() => {
@@ -58,7 +58,7 @@ $(() => {
         console.log($tempDOM[0], i);
 
         // 声明 killAttr属性 array:([0]:中文名, [1]:nodeid, [2]:attr);
-        let killAttrs = killConfigArray[i] ? killConfigArray[i] : [`未命名`, '888888', '默认'];
+        let killAttrs = killConfigArray[i] ? killConfigArray[i] : [`未命名`, '888888', '默认', 0];
 
         console.log('killAttrs:', killAttrs);
 
@@ -73,18 +73,11 @@ $(() => {
         // 声明 nodeid,attr, repeat
         let nodeid = killAttrs[1];
         let attr = killAttrs[2];
+        let repeat = killAttrs[3];
+        let dayspan = (repeat < 200 || repeat === undefined) ? 0 : repeat;
 
-        let repeat = 0;
-        // (() => {
-        //     let $div = $tempDOM.find('div');
-        //     if ($div) {
-        //         let divSize = $div.size();
-        //         if (divSize > 0) {
-        //             return divSize;
-        //         }
-        //     }
-        // })();
-        let dayspan = (repeat < 200 || dayspan === undefined) ? 0 : repeat;
+        console.log('repeat:', repeat);
+        console.log('dayspan:', dayspan);
 
         // cms 规则
         let cms = {
@@ -179,20 +172,24 @@ $(() => {
             let $li = $ul.children('li');
             let size = $li.size();
 
-            console.log('li DOM1:', size > 1);
+            // console.log('li DOM1:', size > 1);
 
             if (size > 1) {
                 // 处理 ul 的 class
                 let ulClass = classHandler($ul);
-                console.log(ulClass);
-
+                // console.log(ulClass);
                 // 处理 li 的 class
                 let liClass = classHandler($li);
-                console.log(liClass);
+                // console.log(liClass);
 
+                // 如果存在 repeat 配置，则 size = repeat配置的循环数量
+                if (repeat > 1) {
+                    size = repeat;
+                } else {
+                    repeat = size;
+                }
                 // 转换 orgHtml
                 orgHtml =
-                    // `<ul${ulClass} kill="${killAttrs}">
                     `<ul${ulClass}>
                         <Repeat Begin=0 End=${size}>
                             <Article>
@@ -204,20 +201,24 @@ $(() => {
             }
 
         } else if ($tempDOM.children('div').size() > 1) {
-
             // rot swiper-wrapper 处理
             let $li = $ul.children('div');
             let size = $li.size();
-
-            console.log('div DOM1:', size > 1);
-
+            // console.log('div DOM1:', size > 1);
             if (size > 1) {
                 // 处理 ul 的 class
                 let ulClass = classHandler($ul);
-                console.log(ulClass);
+                // console.log(ulClass);
                 // 处理 li 的 class
                 let liClass = classHandler($li);
-                console.log(liClass);
+                // console.log(liClass);
+
+                // 如果存在 repeat 配置，则 size = repeat配置的循环数量
+                if (repeat > 1) {
+                    size = repeat;
+                } else {
+                    repeat = size;
+                }
                 // 转换 orgHtml
                 orgHtml =
                     `<Repeat Begin=0 End=${size}>
@@ -226,14 +227,21 @@ $(() => {
                         </Article>
                     </Repeat>`;
             }
-
         } else {
-            // 添加 Article
-            orgHtml = `<Article>${orgHtml}</Article>`;
-            // // 添加 Repeat
-            // if (repeat !== '' && repeat > 0) {
-            //     orgHtml = `<Repeat Begin=0 End=${repeat}>${orgHtml}</Repeat>`;
-            // }
+            // 如果存在 repeat 配置则开启循环
+            if (repeat > 1) {
+                // 添加 Article
+                orgHtml =
+                    `<Repeat Begin=0 End=${repeat}>
+                        <Article>
+                            ${orgHtml}
+                        </Article>
+                    </Repeat>`;
+            } else {
+                // 添加 Article
+                orgHtml = `<Article>${orgHtml}</Article>`;
+
+            }
         }
 
         // 格式化 orgHtml
@@ -243,7 +251,7 @@ $(() => {
             indent_character: (wrap === '\n') ? ' ' : '',
         });
 
-        console.log('HTMLFormat:\n', orgHtml);
+        // console.log('HTMLFormat:\n', orgHtml);
         // console.log('orgHtml1:', orgHtml);
 
         // 使用正则转码
@@ -265,12 +273,11 @@ $(() => {
             .replace('63', '普通');
 
         // 重新给 outputTemp 赋值
-        let outputTemp =
-            `
-            <!-- mod: ${i}, name: ${killAttrs[0]}, nodeid:${nodeid}, attr:${attrZh} BEGIN -->
-            <!--webbot bot="AdvTitleList" nodeid="${(nodeid === '') ? '888888' : nodeid}" type="0" spanmode="0" dayspan="${dayspan}" attr="${(attr === '' || attr === 'null' || attr === '默认') ? '' : attr}" comstring="${wrap}${orgHtml}${wrap}" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->
-            <!-- mod: ${i}, name: ${killAttrs[0]} END -->
-            `;
+        let outputTemp = `
+        <!-- mod: ${i}, name: ${killAttrs[0]}, nodeid:${nodeid}, attr:${attrZh}, rpt:${repeat} BEGIN -->
+        <!--webbot bot="AdvTitleList" nodeid="${(nodeid === '') ? '888888' : nodeid}" type="0" spanmode="0" dayspan="${dayspan}" attr="${(attr === '' || attr === 'null' || attr === '默认') ? '' : attr}" comstring="${wrap}${orgHtml}${wrap}" TAG="BODY" PREVIEW="[高级标题列表]" artattr="0" isshowcode="0" titlekeyword="" keyword="" tagstring="00" starttime="" endtime="" id="" startspan --><!--webbot bot="AdvTitleList" endspan i-checksum="0" -->
+        <!-- mod: ${i} END -->
+        `;
 
         // 给kill 添加内容
         // $tempDOM.attr('kill', killAttrs);
@@ -318,6 +325,7 @@ $(() => {
             t[0] = $.trim(t[0]); // 栏目名
             t[1] = $.trim(t[1]); // 信息片
             t[2] = $.trim(t[2]); // 属性
+            t[3] = $.trim(t[3]) - 0; // repeat
 
             // 转换 attr
             // console.log(t[1].indexOf('默认') >= 0);
@@ -340,14 +348,8 @@ $(() => {
                     .replace(new RegExp('普通', 'g'), '');
             }
 
-
-
-
             killConfigArray.push(t);
         });
-        // let killCmsLen = $killCms.length;
-        // let killConfigLiLen = $killConfigLi.length;
-
 
         // 移除 tempDOM 的 #killConfig
         $killConfig.remove();
@@ -360,12 +362,6 @@ $(() => {
         // 输出结果
         let $output = $('#output');
         $output.text($tempDOM.html());
-
-        // if (killCmsLen <= killConfigLiLen) {
-        //
-        // } else {
-        //     alert(`请检查"killConfig"配置, 我们发现似乎缺少"${killCmsLen - killConfigLiLen}"个项目`);
-        // }
     });
 
     // footer添加版本信息，读取 package.json 中 version对象
